@@ -1,0 +1,35 @@
+
+
+.title_icon{
+/* border:1px solid black; */
+
+}
+.two{
+  position: fixed;
+  margin-bottom: 20px;
+  /* border: 1px solid black; */
+  bottom: 0;
+  background: #f1f1f1;
+  width: 100%;
+}
+.row{
+  display: flex;
+  justify-content: space-around;
+}
+.row1{
+  flex:0 0 45%;
+  
+
+ 
+  border-radius: 5px;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+}
+.row .text-gray{
+ border: 1px solid  #ababab;
+ 
+}
+.row .text-green{
+border: 1px solid #85c383;
+}

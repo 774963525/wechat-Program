@@ -1,0 +1,9 @@
+<view class='nav' style='height:90px'>
+  <!-- 返回图标 -->
+  <view class='title_icon' style="font-size: 13px;position: absolute;top: 52px;left: 20px;color: #fff;" bindtap="back">
+    <view class="cuIcon-back">返回</view>
+  </view>
+  <view class='title_text'>
+    账本设置
+  </view>
+</view>

@@ -1,0 +1,11 @@
+.footer{
+  width: 100%;
+  bottom: 0px;
+  position: fixed;
+  height: 50px;
+  background: #ffffff;
+  z-index: 10;
+  border-top: 1px solid #f2f2f2;
+  box-shadow:10px 10px 10px 10px #e4e4e4;
+  
+}

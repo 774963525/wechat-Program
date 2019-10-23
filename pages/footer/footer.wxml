@@ -1,0 +1,33 @@
+<template name ="footer">
+<view class="footer">
+  <view>
+  <view class="cu-bar tabbar margin-bottom-xl bg-white">
+      <navigator class="action text-gray" url="/pages/index/index" open-type="redirect" hover-class="none" >
+        <view class="cuIcon-rechargefill">
+       
+        </view> 明细
+      </navigator>
+      <view class="action text-gray" >
+        <view class="cuIcon-rank"></view> 超表
+      </view>
+      <navigator class="action text-gray add-action" url="/pages/add/add" open-type="redirect" hover-class="none">
+        <button class="cu-btn cuIcon-add bg-green shadow"></button>
+        记账
+      </navigator>
+      <view class="action text-gray">
+        <view class="cuIcon-upstage">
+          {{pageNum}}
+        </view>
+        榜单
+      </view>
+  
+      <navigator class="action text-gray" url="/pages/user/user" open-type="redirect" hover-class="none">
+        <view class="cuIcon-my">
+          
+        </view>
+        我的
+      </navigator>
+    </view>
+  </view>
+</view>
+</template>

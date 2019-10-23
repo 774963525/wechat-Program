@@ -1,0 +1,108 @@
+<view class='nav' style='height:90px'>
+  <!-- 返回图标 -->
+  <view class='title_icon' style="font-size: 13px;position: absolute;top: 52px;left: 20px;color: #fff;" bindtap="back">
+    <view class="cuIcon-back">返回</view>
+  </view>
+  <view class='title_text'>
+    记一笔
+  </view>
+</view>
+<view style="background:white;width;margin-top:70px;height:90px;">
+  <scroll-view scroll-x class="bg-white nav" style="margin-top:90px;height:70px;background:white;width:300px;left:50%;margin-left:-150px;">
+    <view class="flex text-center" style="padding-top:20px;">
+      <view class="cu-item flex-sub {{index==TabCur?'text-green cur':''}}" wx:for="{{2}}" wx:key bindtap="tabSelect" data-id="{{index}}">
+
+        {{text[index]}}
+      </view>
+    </view>
+  </scroll-view>
+
+</view>
+
+<view class="container ">
+  <view class="cu-list grid col-4" bindtap="showModal" data-target="bottomModal">
+    <view class="cu-item" wx:for="{{tabName}}" wx:key wx-if="{{TabCur==0}}">
+      <view>
+        <text class="cuIcon-profile" style="border:1px solid #f1f1f1;width:50px;height:36px;left:50%;margin-left:-15px; border-radius:50%;background:#f1f1f1; font-size:35px;padding-top:10px;margin-left:-24px; {{index==choose?'color:green':''}}" bindtap="chooseType"
+          data-choose="{{index}}"></text>
+
+        <text style="{{index==choose?'color:green':''}}">{{tabName[index]}}</text>
+      </view>
+    </view>
+    <!-- 收入 -->
+    <view class="cu-item" wx:for="{{tabName}}" wx:key wx-if="{{TabCur==1}}">
+      <view>
+        <text class="'cuIcon-profile' lg text-gray" style="border:1px solid #f1f1f1;width:50px;height:36px;left:50%;margin-left:-15px; border-radius:50%;background:#f1f1f1; font-size:35px;padding-top:10px;margin-left:-24px;{{index==choose?'color:green':''}}"
+          bindtap="chooseType" data-choose="{{index}}"></text>
+      </view>
+      <text style="{{index==choose?'color:green':''}}">{{tabName[index]}}</text>
+    </view>
+
+  </view>
+  <!-- 弹框 -->
+  <view class="cu-modal bottom-modal {{modalName=='bottomModal'?'show':''}}">
+    <view class="cu-dialog">
+      <view class="cu-bar bg-white">
+        <view class="action text-green" bindtap="addRecord">确定</view>
+        <view class="action text-blue" bindtap="hideModal">取消</view>
+      </view>
+      <view class="padding-xl">
+        <form>
+          <view class="cu-form-group margin-top">
+            <view class="title">
+              <text style="color:red">*</text>记帐金额</view>
+            <input placeholder="请填写数字" bindinput="total_money"></input>
+          </view>
+          <view class="cu-form-group">
+            <view class="title">
+              <text style="color:red">*</text>实付金额</view>
+            <input placeholder="请填写数字" bindinput="money"></input>
+          </view>
+          <!-- 日期对象 -->
+          <view class="cu-form-group">
+            <view class="title">日期选择</view>
+            <picker mode="date" value="{{date}}" start="2013-09-01" end="2020-09-01" bindchange="DateChange">
+              <view class="picker">
+                {{date}}
+              </view>
+            </picker>
+          </view>
+          <view class="cu-form-group">
+            <view class="title">交易对象</view>
+            <input placeholder="请输入交易对象(可空)" bindinput="company_name"></input>
+          </view>
+          <!-- 备注 -->
+          <view class="cu-form-group margin-top">
+            <textarea maxlength="-1" bindinput="remark" placeholder="备注(可空)"></textarea>
+          </view>
+
+          <!-- 图片上传 -->
+          <view class="cu-bar bg-white margin-top">
+            <view class="action">
+              图片上传
+            </view>
+            <view class="action">
+              {{imgList.length}}/4
+            </view>
+          </view>
+          <view class="cu-form-group">
+            <view class="grid col-4 grid-square flex-sub">
+              <view class="bg-img" wx:for="{{imgList}}" wx:key="{{index}}" bindtap="ViewImage" data-url="{{imgList[index]}}">
+                <!-- 图片列表 -->
+                <image style="top:0;left:0;" src='{{imgList[index]}}' mode='aspectFill'></image>
+                <view class="cu-tag bg-red" catchtap="DelImg" data-index="{{index}}">
+                  <text class="cuIcon-close"></text>
+                </view>
+              </view>
+              <view class="solids" bindtap="ChooseImage" wx:if="{{imgList.length<4}}">
+                <text class="cuIcon-cameraadd"></text>
+              </view>
+            </view>
+          </view>
+        </form>
+      </view>
+    </view>
+  </view>
+
+
+</view>

@@ -1,0 +1,107 @@
+<view class='nav' style='height:90px'>
+  <!-- 返回图标 -->
+  <view class='title_icon' style="font-size: 13px;position: absolute;top: 52px;left: 20px;color: #fff;" bindtap="back">
+    <view class="cuIcon-back">返回</view>
+  </view>
+  <view class='title_text'>
+    个人账本-类别设置
+  </view>
+</view>
+<view style="background:white;width;margin-top:70px;height:90px;">
+  <scroll-view scroll-x class="bg-white nav" style="margin-top:90px;height:70px;background:white;width:100%;">
+    <view class="flex text-center" style="padding-top:20px;">
+      <!-- <view style="width:100%;background:#ffffff"> -->
+      <view class="cu-item flex-sub {{index==TabCur?'text-green cur':''}}" wx:for="{{2}}" wx:key bindtap="tabSelect" data-id="{{index}}">
+
+        {{text[index]}}
+      </view>
+      <!-- </view> -->
+    </view>
+  </scroll-view>
+
+</view>
+
+<view class="container" style="margin-top: 50px">
+  <!-- 划框 -->
+  <view class="cu-list menu-avatar" style="margin-top:40px;">
+    <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{categoryList}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}" wx-if="{{TabCur==0}}">
+
+      <view class="content" style=" margin-top: 3px;margin-left:-50px;">
+        <view class="text-grey">
+          <view style="margin-top:-6px;width:30px;border:1px solid #f1f1f1;text-align:center;line-height:30px;width:32px;border-radius:50%;background:#f1f1f1;">
+            <!-- <icon class="{{categoryList[index]}}"></icon> -->
+          </view>
+          <view style="margin-left:10px;">{{categoryList[index].name}}</view>
+        </view>
+
+      </view>
+
+
+      <view class="action">
+        <!-- <view class="text-grey text-xs">22:20</view> -->
+        <icon class="cuIcon-sort text-xs" style="line-height: 30px;height: 30px;padding: 0px;"></icon>
+      </view>
+      <view class="move">
+        <view class="bg-grey">返回</view>
+        <view class="bg-red"  data-id="{{categoryList[index].id}}" bindtap="delete">删除</view>
+      </view>
+    </view>
+  </view>
+  <!-- 划框2 -->
+  <view class="cu-list menu-avatar" style="margin-top:=0px;">
+    <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{categoryList}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd" data-target="move-box-{{index}}" wx-if="{{TabCur==1}}">
+
+      <view class="content" style=" margin-top: 3px;margin-left:-50px;">
+        <view class="text-grey">
+          <view style="margin-top:-6px;width:30px;border:1px solid #f1f1f1;text-align:center;line-height:30px;width:32px;border-radius:50%;background:#f1f1f1;">
+            <!-- <icon class="{{tabName[index][0]}}"></icon> -->
+          </view>
+          <view style="margin-left:10px;">{{categoryList[index].name}}</view>
+        </view>
+
+      </view>
+
+
+      <view class="action">
+        <!-- <view class="text-grey text-xs">22:20</view> -->
+        <icon class="cuIcon-sort text-xs" style="line-height: 30px;height: 30px;padding: 0px;"></icon>
+      </view>
+      <view class="move">
+        <view class="bg-grey">返回</view>
+        <view class="bg-red"  data-id="{{categoryList[index].id}}" bindtap="delete">删除</view>
+      </view>
+
+    </view>
+  </view>
+  <view style="height:100px;">
+
+  </view>
+  <!-- 底部两框 -->
+  <!-- <icon  class="cuIcon-back text-xs"></icon> -->
+  <view class="two">
+
+    <view class="row">
+
+      <view class="row1 action text-gray">
+        <icon class="cuIcon-edit"></icon> 保存排序</view>
+      <view class="row1 action text-green" bindtap="showModal" data-target="bottomModal">
+        <icon class="cuIcon-add"></icon> 添加账本</view>
+    </view>
+
+  </view>
+  <view class="cu-modal bottom-modal {{modalName=='bottomModal'?'show':''}}">
+    <view class="cu-dialog">
+      <view class="cu-bar bg-white">
+        <view class="action text-green" bindtap="submit">确定</view>
+        <view class="action text-blue" bindtap="hideModal">取消</view>
+      </view>
+      <view class="padding-xl">
+        <view class="cu-form-group">
+          <view class="title">名字</view>
+          <input placeholder="添加的名字" bindinput="name"></input>
+        </view>
+      </view>
+    </view>
+  </view>
+
+</view>

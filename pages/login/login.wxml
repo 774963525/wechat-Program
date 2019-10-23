@@ -1,0 +1,27 @@
+<view class='nav' style='height:90px'>
+  <!-- 返回图标 -->
+  <view class='title_icon' style="font-size: 13px;position: absolute;top: 52px;left: 20px;color: #fff;" bindtap="back">
+    <view class="cuIcon-back">返回</view>
+  </view>
+  <view class='title_text'>
+    账号登录
+  </view>
+</view>
+<view class="container" style="margin-top:200px">
+  <form >
+    <view class="cu-form-group">
+        <view class="title">手机号码</view>
+        <input placeholder="请输入手机号码" bindinput="phoneNumber"></input>
+    </view>
+    <view>\n</view>
+    <view class="cu-form-group">
+        <view class="title">密码</view>
+        <input placeholder="请输入密码" password="true" bindinput="password"></input>
+      </view>
+</form>
+<view class="padding flex flex-direction">
+
+  <button bindtap="login" class="cu-btn bg-red margin-tb-sm lg">登录</button>
+</view>
+
+</view>

@@ -1,0 +1,26 @@
+<view class='nav' style='height:90px'>
+  <!-- 返回图标 -->
+  <view class='title_icon' style="font-size: 13px;position: absolute;top: 52px;left: 20px;color: #fff;" bindtap="back">
+    <view class="cuIcon-back">返回</view>
+  </view>
+  <view class='title_text'>
+    请完成登录
+  </view>
+</view>
+
+<view class="container" style="margin-top:100px">
+   <view style="text-align:center;position:relative;top:150px;">
+    <view class="cuIcon-all text-green" style="font-size:100px;"></view>
+    <view style="height:10px;"></view>
+    <text class="text-black">让记账成为一种习惯</text>
+    <view style="height:30px;"></view>
+     <navigator class="padding flex flex-direction" url="/pages/login/login"  hover-class="none">
+    <button class="cu-btn bg-green margin-tb-sm lg">登录账号,开始记账</button>
+  </navigator> 
+    <text class="text-gray">理性消费,从记账开始,\n
+    自律生活,从记账开始,\n
+    健康生活,从记账开始
+    </text>
+  </view>
+  
+</view>

@@ -1,0 +1,33 @@
+<view class='nav' style='height:90px;'>
+  <!-- 返回图标 -->
+  <view class='title_icon' style="font-size: 13px;position: absolute;top: 52px;left: 20px;color: #fff;" bindtap="back">
+    <view class="cuIcon-back">返回</view>
+  </view>
+  <view class='title_text'>
+    <view class="bg-green" style="border:1px solid #fff;width:172px;height:20px;left:50%;margin-left:-90px;top:55px;z-index:100;position:fixed;">
+  <view class="flex" style="font-size:14px;justify-content: space-around;">
+    <view class="cu-item  {{index==TabCur?'bg-white text-green cur':''}}" wx:for="{{3}}" wx:key bindtap="tabSelect" data-id="{{index}}" style="line-height:20px;height:20px;">
+      {{title[index]}}
+    </view>
+  </view>
+</view>
+  </view>
+</view>
+
+
+
+<scroll-view scroll-x class="bg-green nav" style="margin-top:90px;height:70px;">
+  <view class="flex text-center" style="padding-top:20px;">
+    <view class="cu-item flex-sub {{index==TabCur?'text-white cur':''}}" wx:for="{{3}}" wx:key bindtap="tabSelect" data-id="{{index}}">
+      {{data[index]}}份
+    </view>
+  </view>
+</scroll-view>
+
+<!-- 下 -->
+
+<scroll-view scroll-x class="bg-white nav" scroll-with-animation scroll-left="{{scrollLeft}}" style="margin-top:160px;background:#f1f1f1">
+  <view class="cu-item {{index==NavCur?'text-green cur':''}}" wx:for="{{10}}" wx:key bindtap="navSelect" data-id="{{index}}">
+    Tab{{index}}
+  </view>
+</scroll-view>

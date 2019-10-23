@@ -1,0 +1,18 @@
+<view class='nav' style='height:90px;'>
+  <!-- 返回图标 -->
+  <view class='title_icon' style="font-size: 15px;position: absolute;top: 52px;left: 20px;color: #fff;" bindtap="back">
+    <view class="cuIcon-back" style="margin-top:7px;">返回</view>
+  </view>
+  <view class='title_text' style="width:150px;left:50%;margin-left:-75px;">
+    <!-- 弹出时间选择 -->
+        <picker mode="date" value="{{date}}" start="2017-01" end="2022-12" fields="month" bindchange="bindDateChange">
+       
+        <view class="picker">
+          <text>{{time}}</text><text class="cuIcon-triangledownfill "></text>
+        </view>
+
+      </picker>
+
+    
+  </view>
+</view>

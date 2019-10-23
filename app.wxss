@@ -1,0 +1,68 @@
+@import './pages/styles/iconfont.wxss';
+@import "colorui/main.wxss";
+@import "colorui/icon.wxss";
+
+.nav {
+  width: 100%;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* height: 70px; */
+
+  background: #4fae70;
+  z-index: 100;
+}
+.nav_icon{
+  width: 100%;
+  height: 45px;
+  line-height: 45px;
+  
+  position: absolute;
+  bottom: 0;
+  left: 25px;
+  
+  z-index: 10;
+  font-size: 36rpx;
+  color: #fff;
+}
+.title_text {
+  width: 100%;
+  height: 45px;
+  line-height: 45px;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  font-size: 36rpx;
+  color: #fff;
+
+}
+ 
+.title_icon {
+  position: absolute;
+  bottom: 10rpx;
+  left: 10rpx;
+  border-radius: 70rpx;
+  box-sizing: border-box;
+  /* border: 0.5px solid #eaeaea; */
+  display: flex;
+  z-index: 20;
+}
+ 
+.title_icon image {
+  display: inline-block;
+  overflow: hidden;
+  width: 32rpx;
+  height: 36rpx;
+  padding: 16rpx 32rpx;
+  text-align: center;
+}
+ 
+.title_icon view {
+  height: 18px;
+  
+  margin-top: 6px;
+}
+

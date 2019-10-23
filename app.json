@@ -1,0 +1,28 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/footer/footer",
+    "pages/logs/logs",
+    "pages/accountSetting/accountSetting",
+    "pages/addAccount/addAccount",
+    "pages/calendar/calendar",
+    "pages/privateAccount/privateAccount",
+    "pages/picTable/picTable",
+    "pages/table2/table2",
+    "pages/user/user",
+    "pages/register/register",
+    "pages/login/login",
+    "pages/add/add",
+    "pages/accountDetail/accountDetail",
+    "pages/setSingleRecord/setSingleRecord",
+    "pages/suggestions/suggestions",
+    "pages/changeUserMessage/changeUserMessage",
+    "pages/changePass/changePass",
+    "pages/changePhone/changePhone",
+    "pages/goLogin/goLogin"
+  ],
+  "window": {
+    "navigationStyle": "custom"
+  },
+  "sitemapLocation": "sitemap.json"
+}

@@ -1,0 +1,78 @@
+<import src="../footer/footer.wxml" />
+<scroll-view scroll-y class="scrollPage">
+  <view class="UCenter-bg">
+    <image src="{{head_img}}" mode="scaleToFill"></image>
+    
+    <view class="text-xl" bindtap="login" >
+      <text class="text-df" style="font-size:30px;">{{nickname}}</text>
+    </view>
+    <view class="margin-top-sm">
+      
+    </view>
+    <image src="https://raw.githubusercontent.com/weilanwl/ColorUI/master/demo/images/wave.gif" mode="scaleToFill" class="gif-wave"></image>
+  </view>
+  <view class="padding flex text-center text-grey bg-white shadow-warp">
+    <view class="flex flex-sub flex-direction solid-right">
+      <view class="text-xxl text-orange">{{visitTotal}}</view>
+      <view class="margin-top-sm">已邀请</view>
+    </view>
+    <view class="flex flex-sub flex-direction solid-right">
+      <view class="text-xxl text-blue">{{starCount}}</view>
+      <view class="margin-top-sm">总账本</view>
+    </view>
+    <view class="flex flex-sub flex-direction">
+      <view class="text-xxl text-green">{{forksCount}}</view>
+      <view class="margin-top-sm">共记账</view>
+    </view>
+  </view>
+  <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
+    <view class="cu-item arrow" wx:if="{{!login}}">
+    <!-- 点击注册 -->
+      <navigator class="content"  url="/pages/register/register" open-type="redirect" hover-class="none" bindtap="register" >
+        <text class="cuIcon-github text-grey"></text>
+        <text class="text-grey">注册</text>
+      </navigator>
+
+    </view>
+    <view class="cu-item arrow " wx:if="{{!login}}">
+      <view class="content" bindtap="login">
+        <text class="cuIcon-github text-grey"></text>
+        <text class="text-grey">登录</text>
+      </view>
+    </view>
+    <view class="cu-item arrow" wx:if="{{login}}">
+      <navigator class="content" url="/pages/changeUserMessage/changeUserMessage" hover-class="none" >
+        <text class="cuIcon-formfill text-green"></text>
+        <text class="text-grey">修改个人信息</text>
+      </navigator>
+    </view>
+    <view class="cu-item arrow" wx:if="{{login}}">
+      <navigator class="content" url="/pages/changePass/changePass" hover-class="none">
+        <text class="cuIcon-formfill text-green"></text>
+        <text class="text-grey">修改密码 </text>
+      </navigator>
+    </view>
+    
+    <view class="cu-item arrow" wx:if="{{login}}">
+      <navigator class="content" url="/pages/changePhone/changePhone" hover-class="none">
+        <text class="cuIcon-appreciatefill text-red"></text>
+        <text class="text-grey">修改手机号码 </text>
+      </navigator>
+    </view>
+    <view class="cu-item arrow" wx:if="{{login}}">
+      <button class="cu-btn content" open-type="feedback" bindtap="suggestions" >
+        <text class="cuIcon-writefill text-cyan"></text>
+        <text class="text-grey">意见反馈</text>
+      </button>
+      
+    </view>
+    <view class="cu-item arrow"  wx:if="{{login}}">
+      <navigator class="content" url="/pages/about/test/list" hover-class="none" bindtap="exitLogin">
+        <text class="cuIcon-creativefill text-orange"></text>
+        <text class="text-grey">退出登录</text>
+      </navigator>
+    </view>
+  </view>
+  <view class="cu-tabbar-height"></view>
+</scroll-view>
+<template is="footer"></template>

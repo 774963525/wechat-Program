@@ -1,0 +1,4 @@
+/* pages/changeUserMessage/changeUserMessage.wxss */
+.title{
+  width:100px;
+}

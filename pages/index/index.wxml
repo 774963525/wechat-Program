@@ -1,0 +1,128 @@
+<import src="../footer/footer.wxml" />
+<!--index.wxml-->
+<view class='nav' style='height:{{navH}}px'>
+  <view class="nav_icon">
+    <!-- 弹窗按钮 -->
+    <view class="tan" bindtap="{{token==null?'goLogin':'showModal'}}" data-target="DrawerModalL">
+      <text class="iconfont icon-rili"></text>
+    </view>
+  </view>
+  <view class='title_text'>
+    一起记账
+  </view>
+  <!-- 弹窗 -->
+  <view class="cu-modal drawer-modal justify-start {{modalName=='DrawerModalL'?'show':''}}" bindtap="hideModal">
+
+    <view class="cu-dialog basis-lg" catchtap style="top:{{CustomBar}}px;height:calc(100vh - {{CustomBar}}px)">
+      <view class="cu-list menu text-left">
+        <view class="bar"></view>
+        <icon class="cuIcon-titles text-green"></icon>切换账本明细
+
+        <view class="cu-item arrow" wx:for="{{num}}" wx:key>
+          <view class="content">
+            <view class="action {{index==choose?'text-green':'text-grey'}}" bindtap="getAccountId" data-id="{{idList[index]}}" data-choose="{{index}}">
+              <!-- <icon  style="margin-top:-7px;" class="{{accountList[index][0]}}"></icon> -->
+              {{accountList[index]}}
+            </view>
+          </view>
+        </view>
+        <!-- 账本设置 点击跳转 -->
+        <view class="cuIcon-settings text-green" bindtap="goAccountSetting">账本设置</view>
+      </view>
+    </view>
+  </view>
+</view>
+<!--正文-->
+<view class="container" style="margin-top: {{navH}}px">
+  <!-- 收入支出 -->
+  <view class="detail">
+    <view class="time">
+      <picker mode="date" value="{{date}}" start="2017-01" end="2022-12" fields="month" bindchange="bindDateChange">
+        <text>{{year}}年</text>
+        <view class="picker">
+          <text style="font-size:25px;">{{month}}</text> <text> 月 <text class="cuIcon-triangledownfill "></text></text>
+        </view>
+
+      </picker>
+
+    </view>
+    <view class="in">
+      <text>收入
+      <text style="font-size:25px;">{{income}}</text>.{{income1}}</text>
+    </view>
+    <view class="out">
+      <text>支出
+    <text style="font-size:25px;">{{pay}}</text>.{{pay1}}</text>
+    </view>
+  </view>
+  <!-- 导航 -->
+  <view class="nav-1">
+    <view class="nav-row" >
+      <view class="nav-choose" bindtap="{{token==null?'goLogin':'goPrivateAccount'}}">
+        <text class="iconfont icon-leibieguanli"></text>
+      </view>
+      <!-- goTable1 -->
+      <view class="nav-choose" bindtap="{{token==null?'goLogin':'goCalendar'}}">
+        <text class="iconfont icon-rili"></text>
+      </view>
+      <view class="nav-choose" bindtap="{{token==null?'goLogin':'goTable1'}}">
+        <text class="iconfont icon-tubiao"></text>
+      </view>
+      <view class="nav-choose" bindtap="{{token==null?'goLogin':'goTable2'}}">
+        <text class="iconfont icon-tubiaozhongxin"></text>
+      </view>
+      <view class="nav-choose" bindtap="{{token==null?'goLogin':'goTable3'}}">
+        <text class="iconfont icon-tubiao1"></text>
+      </view>
+    </view>
+  </view>
+</view>
+
+<!-- 显示 -->
+
+
+<view class="main" >
+ 
+   <!-- <view style="text-align:center;position:relative;top:200px;">
+    <view class="cuIcon-all text-gray" style="font-size:100px;"></view>
+    <text class="text-gray">暂无数据,赶紧记一笔吧!</text>
+  </view> -->
+  <view  wx:if="{{token==null}}" style="margin-top:200px;">
+  <view style="margin:0 auto;text-align:center;font-size:14px" class="text-gray">快快登录体验吧</view>
+  <!--  hover-class="none" 点击跳转没有阴影 -->
+  <navigator class="padding flex flex-direction" url="/pages/goLogin/goLogin"  hover-class="none">
+    <button bindtap="goLogin" class="cu-btn bg-green margin-tb-sm lg">登录账号,开始记账</button>
+  </navigator> 
+</view>
+<!-- 有token显示 -->
+  <view wx:for="{{showList}}" wx:key  bindtap="getSingle" wx:if="{{token!=null}}" data-choose2="{{showList[index].record_id}}">
+    
+    <!-- <text>账单id:{{showList[index].id}}</text> -->
+    <!-- <view>
+      <text>交易对象:{{showList[index].company_name}}</text> 
+    </view> -->
+    
+    <view style="color:#aaaaaa;height:40px;line-height:40px;">
+      <text >{{showList[index].date}}</text>
+      <text >{{showList[index].type=='0'?'收入':'支出'}}:{{showList[index].money}}</text>
+    </view>
+    <!-- 白框内 -->
+    <view style="background:#ffffff;height:60px;width:100%;line-height:60px;">
+      
+        <text style="padding-left:50px;">日用</text>
+        <text style="margin-left:200px;">{{showList[index].type=='0'?'+':'-'}}{{showList[index].money}}           </text>
+     
+      
+    </view>
+    <!-- <text>备注:{{showList[index].remark}}</text>  -->
+  </view>
+  
+</view>
+
+<view>
+  <template is="footer" >
+     
+  </template>
+  
+  
+</view>

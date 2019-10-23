@@ -1,0 +1,47 @@
+<view class='nav' style='height:90px'>
+  <!-- 返回图标 -->
+  <view class='title_icon' style="font-size: 13px;position: absolute;top: 52px;left: 20px;color: #fff;" bindtap="back">
+    <view class="cuIcon-back">返回</view>
+  </view>
+  <view class='title_text'>
+    手机号修改
+  </view>
+</view>
+<!-- 输入手机号 -->
+<view class="container" style="margin-top:200px;">
+  <form>
+  <view class="cu-form-group">
+      <view class="title">密码</view>
+      <input placeholder="密码" password="true" bindinput="password"></input>
+    </view>
+    <view class="cu-form-group">
+      <view class="title">手机号码</view>
+      <input placeholder="请输入手机号码" bindinput="phoneNumber"></input>
+    </view>
+    <!-- 图片验证码 -->
+    <view class="cu-form-group">
+      <view class="title">图片验证码</view>
+      
+      <input placeholder="请输入验证码" bindinput="picCode"></input>
+      <image class="widget_arrow2" src="{{url}}" style="width:70px;height:30px;" ></image>
+      <button class="cu-btn bg-green shadow" bindtap="sendPicCode">验证码</button>
+    </view>
+    <!-- 验证码 -->
+    <view class="cu-form-group">
+      <view class="title">手机验证码</view>
+      <input placeholder="请输入验证码" bindinput="mailCode"></input>
+      <button class="cu-btn bg-green shadow" bindtap="sendMailCode">发送验证码</button>
+    </view>
+    <text>\n</text>
+    
+    
+    <text>\n</text>
+  </form>
+  <text>\n</text>
+  <view class="padding flex flex-direction">
+    <button class="cu-btn bg-green lg" bindtap="submit">提交</button>
+  </view>
+
+
+
+</view>

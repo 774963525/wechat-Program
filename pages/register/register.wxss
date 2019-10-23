@@ -1,0 +1,4 @@
+/* pages/register.wxss */
+.title{
+  width: 120px;
+}

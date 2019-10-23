@@ -1,0 +1,59 @@
+<view class='nav' style='height:90px'>
+  <!-- 返回图标 -->
+  <view class='title_icon' style="font-size: 13px;position: absolute;top: 52px;left: 20px;color: #fff;" bindtap="back">
+    <view class="cuIcon-back">返回</view>
+  </view>
+  <view class='title_text'>
+    {{account_name}}-{{category_name}}
+  </view>
+</view>
+<view class="container" style="margin-top:120px;">
+  <!-- 账单类型 -->
+  <view class="cu-form-group">
+		<view class="title">用户</view>
+		<input value="{{user_nickname}}" class="text-right"  disabled='disabled'></input>
+	</view>
+  
+  <view class="cu-form-group">
+		<view class="title">类型</view>
+		<input value="{{type_string}}"class="text-right" disabled='disabled'></input>
+	</view>
+  <view class="cu-form-group">
+		<view class="title">金额</view>
+		<input value="{{total_money}}"class="text-right" disabled="{{change==0?'disabled':''}}" bindinput="money"></input>
+	</view>
+  <view class="cu-form-group">
+		<view class="title">对象</view>
+		<input value="{{company_name}}"class="text-right" disabled="{{change==0?'disabled':''}}" bindinput="company"></input>
+	</view>
+  <view class="cu-form-group">
+		<view class="title">备注</view>
+		<input value="{{remark}}"class="text-right" disabled="{{change==0?'disabled':''}}" bindinput="mark"></input>
+	</view>
+   <view class="cu-form-group">
+		<view class="title">日期</view>
+		<input value="{{date}}" class="text-right" disabled='disabled'></input>
+	</view>
+  <!-- 图片 -->
+  <view class="pic">
+    <view  class="showPic" wx:for="{{thumbnail}}" wx:key>
+      <view  bindtap="ViewImage" data-url="{{index}}">
+        <image src="{{thumbnail[index]}}"></image>
+      </view>
+      
+    </view>
+  </view>
+  <!-- 修改和删除 -->
+  <view class="control">
+    <view class="row">
+      <view bindtap="{{change==0?'edit':'save'}}" wx:if="change==0">{{change==0?'修改':'保存'}}</view>
+    
+      
+    </view>
+     <view class="row">
+      <view bindtap="delete">删除</view>
+      
+    </view>
+    
+  </view>
+</view>
