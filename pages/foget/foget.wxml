@@ -4,7 +4,7 @@
     <view class="cuIcon-back">返回</view>
   </view>
   <view class='title_text'>
-    账号注册
+    密码找回
   </view>
 </view>
 <!-- 输入手机号 -->
@@ -30,13 +30,8 @@
     </view>
     <text>\n</text>
     <view class="cu-form-group">
-      <view class="title">请输入用户名</view>
-      <input placeholder="确定后不可修改" bindinput="username"></input>
-    </view>
-    <text>\n</text>
-    <view class="cu-form-group">
       <view class="title">密码</view>
-      <input placeholder="密码" password="true" bindinput="password"></input>
+      <input placeholder="请输入新密码" password="true" bindinput="password"></input>
     </view>
     <text>\n</text>
   </form>

@@ -18,11 +18,7 @@
 	</view>
 
   <!-- 报错写这里 -->
-  <!-- 初始值 -->
-  <view class="cu-form-group">
-		<view class="title">初始余额</view>
-		<input placeholder="{{initial_balance}}" class="text-right" bindinput="initial_balance"></input>
-	</view>
+
   <!-- 选择 -->
   <view style="text-align:center">
     <text style="1px solid red;color:red;"></text>

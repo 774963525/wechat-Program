@@ -9,6 +9,7 @@ Page({
     password: "",
     // 注册成功
     success:"0",
+    check:0,
   },
   back() {
     // wx.navigateTo({ url: '/pages/user/user', })
@@ -60,7 +61,7 @@ Page({
         "Content-Type": "application/x-www-form-urlencoded"
       },
       // 13162793171
-      success: function(res) {
+      success: (res) => {
         console.log(res.data);
         if (res.data.status != false) {
           wx.showToast({
@@ -69,7 +70,19 @@ Page({
             duration: 2000,
           })
         } else {
-          console.log(res.data.data);
+          wx.showModal({
+            title: '错误',
+            content: res.data.data,
+            success(res) {
+              console.log(res);
+            }
+          })
+          setTimeout(() => {
+            this.setData({
+              check: 1
+            })
+          }, 1000)
+          
         }
 
       },

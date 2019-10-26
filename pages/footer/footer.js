@@ -15,7 +15,23 @@ Component({
   detached: function () { },
 
   methods: {
-    
+    getToken(){
+      app.getToken((token) => {
+        this.setData({
+          token: token,
+        })
+        if (this.data.token == null) {
+          this.setData({
+            status:false
+          })
+        }else{
+          this.setData({
+            status: true
+          })
+        }
+        
+      }) 
+    }
   }
 
 })

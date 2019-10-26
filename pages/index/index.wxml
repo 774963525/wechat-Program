@@ -18,20 +18,21 @@
         <view class="bar"></view>
         <icon class="cuIcon-titles text-green"></icon>切换账本明细
 
-        <view class="cu-item arrow" wx:for="{{num}}" wx:key>
+        <view class="cu-item arrow" wx:for="{{bookListInfosList[0]}}" wx:key>
           <view class="content">
-            <view class="action {{index==choose?'text-green':'text-grey'}}" bindtap="getAccountId" data-id="{{idList[index]}}" data-choose="{{index}}">
+            <view class="action {{index==choose?'text-green':'text-grey'}}" bindtap="getBookId" data-id="{{bookListInfosList[0][index].id}}" data-choose="{{index}}">
               <!-- <icon  style="margin-top:-7px;" class="{{accountList[index][0]}}"></icon> -->
-              {{accountList[index]}}
+              {{bookListInfosList[0][index].name}}
             </view>
           </view>
         </view>
         <!-- 账本设置 点击跳转 -->
-        <view class="cuIcon-settings text-green" bindtap="goAccountSetting">账本设置</view>
+        <view class="cuIcon-settings text-green" bindtap="goBookSetting">账本设置</view>
       </view>
     </view>
   </view>
 </view>
+
 <!--正文-->
 <view class="container" style="margin-top: {{navH}}px">
   <!-- 收入支出 -->
@@ -78,16 +79,16 @@
   </view>
 </view>
 
+
+
 <!-- 显示 -->
 
 
 <view class="main" >
  
-   <!-- <view style="text-align:center;position:relative;top:200px;">
-    <view class="cuIcon-all text-gray" style="font-size:100px;"></view>
-    <text class="text-gray">暂无数据,赶紧记一笔吧!</text>
-  </view> -->
-  <view  wx:if="{{token==null}}" style="margin-top:200px;">
+   
+
+  <view  wx:if="{{token==null}}" style="margin-top:100px;">
   <view style="margin:0 auto;text-align:center;font-size:14px" class="text-gray">快快登录体验吧</view>
   <!--  hover-class="none" 点击跳转没有阴影 -->
   <navigator class="padding flex flex-direction" url="/pages/goLogin/goLogin"  hover-class="none">
@@ -95,8 +96,12 @@
   </navigator> 
 </view>
 <!-- 有token显示 -->
-  <view wx:for="{{showList}}" wx:key  bindtap="getSingle" wx:if="{{token!=null}}" data-choose2="{{showList[index].record_id}}">
-    
+<view wx:if="{{showList.length==0&&token!=null}}" style="text-align:center;margin-top:100px;">
+    <view class="cuIcon-all text-gray" style="font-size:100px;"></view>
+    <text class="text-gray">当前账本还没有记录,赶紧记一笔吧!</text>
+  </view>
+  
+  <view wx:for="{{showList}}" wx:key bindtap="getSingle" wx:if="{{token!=null}}" data-bookId="{{showList[index].id}}">
     <!-- <text>账单id:{{showList[index].id}}</text> -->
     <!-- <view>
       <text>交易对象:{{showList[index].company_name}}</text> 
@@ -104,13 +109,13 @@
     
     <view style="color:#aaaaaa;height:40px;line-height:40px;">
       <text >{{showList[index].date}}</text>
-      <text >{{showList[index].type=='0'?'收入':'支出'}}:{{showList[index].money}}</text>
+      
     </view>
     <!-- 白框内 -->
-    <view style="background:#ffffff;height:60px;width:100%;line-height:60px;">
+    <view style="background:#ffffff;height:60px;width:100%;line-height:60px;position:relative;font-size:16px;" >
       
-        <text style="padding-left:50px;">日用</text>
-        <text style="margin-left:200px;">{{showList[index].type=='0'?'+':'-'}}{{showList[index].money}}           </text>
+        <text style="padding-left:50px;">对象:  {{showList[index].company_name}}</text>
+        <text class="{{showList[index].type==1?'text-green':'text-red'}}" style="position:absolute;right:50px;">{{showList[index].type==1?'+':'-'}}{{showList[index].total_money}}</text>
      
       
     </view>
@@ -119,10 +124,12 @@
   
 </view>
 
-<view>
-  <template is="footer" >
+
+
+ <view style="position:absolute;bottom:0px;">
+  <template is="footer" > -->
      
-  </template>
-  
+   </template> 
+  <!-- <pageFoot></pageFoot> -->
   
 </view>

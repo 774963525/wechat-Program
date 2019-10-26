@@ -19,10 +19,20 @@
     "pages/changeUserMessage/changeUserMessage",
     "pages/changePass/changePass",
     "pages/changePhone/changePhone",
-    "pages/goLogin/goLogin"
+    "pages/goLogin/goLogin",
+    "pages/bookSetting/bookSetting",
+    "pages/addBook/addBook",
+    "pages/setSingleBook/setSingleBook",
+    "pages/foget/foget"
   ],
   "window": {
-    "navigationStyle": "custom"
+    "navigationBarBackgroundColor": "#39b54a",
+    "navigationBarTitleText": "Color UI",
+    "navigationStyle": "custom",
+    "navigationBarTextStyle": "white"
+  },
+  "usingComponents": {
+    "cu-custom": "/colorui/components/cu-custom"
   },
   "sitemapLocation": "sitemap.json"
 }

@@ -48,7 +48,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 20,
+			"current": 27,
 			"list": [
 				{
 					"id": 2,
@@ -195,6 +195,54 @@
 					"name": "pages/goLogin/goLogin",
 					"pathName": "pages/goLogin/goLogin",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/picTable/picTable",
+					"pathName": "pages/picTable/picTable",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/login/login",
+					"pathName": "pages/login/login",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/accountSetting/accountSetting",
+					"pathName": "pages/accountSetting/accountSetting",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/bookSetting/bookSetting",
+					"pathName": "pages/bookSetting/bookSetting",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/setSingleBook/setSingleBook",
+					"pathName": "pages/setSingleBook/setSingleBook",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/register/register",
+					"pathName": "pages/register/register",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/foget/foget",
+					"pathName": "pages/foget/foget",
 					"scene": null
 				}
 			]

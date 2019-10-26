@@ -1,16 +1,27 @@
 
 var app = getApp();
+var api = app.globalData.api;
 Page({
   data:{
     // 1.现金 2.银行 3.支付平台 4.其它
     index:0,
     name:"",
     picker: ['请选择','现金', '银行', '支付平台', ' 其它'],
-    initial_balance:100,
-    sort:10,
+    initial_balance:0,
+    sort:1,
     textareaAInput:"",
+    showLoading: false,
   },
-  
+  showLoading() {
+    this.setData({
+      showLoading: true
+    })
+    wx.showToast({
+      title: '加载中',
+      mask: true,
+      icon: 'loading'
+    })
+  },
   onLoad() {
     // 获取token
     app.getToken((token) => {
@@ -57,12 +68,13 @@ Page({
     }) 
    
   },
-  // 新增账户
-  addAccount(){
-    var api = app.globalData.api;
+  addBook(){
 
-    
+  },
+  // 新增账户 
+  addAccount(){ 
     // console.log(api)
+    this.showLoading();
     wx.request({
       url: api+"api/account/create?token="+this.data.token,
       method: "POST",
@@ -98,13 +110,16 @@ Page({
         } else {
           wx.showModal({
             title: '错误',
-            content: '这是一个错误弹窗',
+            content: res.data.data,
             success(res) {
               console.log(res);
             }
           })
           return
         }
+        this.setData({
+          showList: false
+        })
       }
     })
     

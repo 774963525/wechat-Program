@@ -23,5 +23,11 @@
 
   <button bindtap="login" class="cu-btn bg-red margin-tb-sm lg">登录</button>
 </view>
+<view >
+  <view style="text-align:center" class="text-red"> <text bindtap="fogetPass">忘记密码?</text> <text style="font-size:20px;color:gray;" decode="{{true}}">  &nbsp;●&nbsp;  </text>  <text bindtap="register">没有账号?</text>
+  </view>
+</view>
+<view>
 
+</view>
 </view>

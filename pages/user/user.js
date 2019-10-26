@@ -91,6 +91,12 @@ Component({
         url: "/pages/login/login",
       })
     },
+    // 跳转
+    accountSetting(){
+      wx.navigateTo({
+        url: "/pages/accountSetting/accountSetting",
+      })
+    },
     // 提交意见
     suggestions(){
       // 跳转

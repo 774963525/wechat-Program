@@ -1,7 +1,12 @@
 @import './pages/styles/iconfont.wxss';
 @import "colorui/main.wxss";
 @import "colorui/icon.wxss";
-
+.foot {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 999;
+}
 .nav {
   width: 100%;
   overflow: hidden;

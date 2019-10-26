@@ -5,7 +5,8 @@ var api = app.globalData.api;
 Page({
   data: {
     imgList:[],
-    userMessage:{}
+    userMessage:{},
+    showLoading: false
   },
   back() {
     // wx.navigateTo({ url: '/pages/accountSetting/accountSetting', })
@@ -13,6 +14,15 @@ Page({
     // 返回上一层
     wx.navigateBack({
       delta: 1
+    })
+  },
+  showLoading() {
+    this.setData({
+      showLoading: true
+    })
+    wx.showToast({
+      title: '加载中',
+      icon: 'loading'
     })
   },
   // 选择图片并上传
@@ -40,6 +50,7 @@ Page({
     });
   },
   picUpload(picUrl){
+    this.showLoading();
     wx.uploadFile({
       url: api + 'api/upload/image?token=' + this.data.token,
       filePath: picUrl,
@@ -63,7 +74,8 @@ Page({
           return
         }
         this.setData({
-          fileKey: fileKey
+          fileKey: fileKey,
+          showLoading: false
         })
         // console.log("-------------")
         // console.log(this.data.fileKey);
@@ -105,6 +117,7 @@ Page({
   },
   // 提交
   submit() {
+    this.showLoading();
     wx.request({
       url: api + 'api/user/profile/update?token=' + this.data.token,
       method: "POST",
@@ -121,17 +134,19 @@ Page({
           wx.showToast({
             title: '修改成功',
             icon: 'success',
-            duration: 2500,
+            duration: 1000,
           })
           setTimeout(function () {
             wx.navigateBack({
               delta: 1
             })
-          }, 2500)
+          }, 1000)
         }
-
-
+        this.setData({
+          showLoading: false
+        })
       }
+     
     })
   },
   onLoad() {

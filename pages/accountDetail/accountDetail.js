@@ -9,6 +9,17 @@ Page({
     remark:"",
     type:0,
     picker: ['请选择', '现金', '银行', '支付平台', ' 其它'],
+    showLoading: false
+  },
+  showLoading() {
+    this.setData({
+      showLoading: true
+    })
+    wx.showToast({
+      title: '加载中',
+      mask: true,
+      icon: 'loading'
+    })
   },
   back() {
     // wx.navigateTo({ url: '/pages/accountSetting/accountSetting', })
@@ -22,11 +33,6 @@ Page({
   name(e){
     this.setData({
       name:e.detail.value
-    })
-  },
-  initial_balance(e) {
-    this.setData({
-      initial_balance: e.detail.value
     })
   },
   remark(e) {
@@ -46,6 +52,7 @@ Page({
   },
   // 修改数据
   updateAccount(){
+    this.showLoading();
     console.log(this.data.type)
     var id = this.data.id;
     wx.request({
@@ -55,12 +62,10 @@ Page({
         name: this.data.name,
         // 帐户类型 int 1.现金 2.银行 3.支付平台 4.其它
         type: this.data.type,
-        // 初始值
-        initial_balance: this.data.initial_balance,
         // 备注
         remark: this.data.remark,
         // sort 排序值 int  可空 默认为10
-        sort: 10
+        sort: 1
 
 
       },
@@ -71,14 +76,19 @@ Page({
         console.log(res.data);
         if (res.data.status == true) {
           wx.showToast({
-            title: '成功',
+            title: '修改成功',
             icon: 'success',
             duration: 2000,
           })
         } else {
           console.log(res.data);
         }
-        this.back();
+        this.setData({
+          showList: false
+        })
+        setTimeout(()=>{
+          this.back()
+        },2000)
       },
     })
   },
@@ -91,7 +101,7 @@ Page({
         token: token,
       })
     })
-
+    this.showLoading();
     var accountData = (wx.getStorageSync('setAccountData') || [])
     console.log(accountData);
     this.setData({
@@ -101,6 +111,7 @@ Page({
       remark: accountData.remark,
       type: accountData.type,
       id: accountData.id,
+      showLoading: false
     })
   }
 

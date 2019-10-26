@@ -3,7 +3,17 @@ var  app = getApp();
 var api = app.globalData.api;
 Page({
   data: {
-
+    showLoading: false
+  },
+  showLoading() {
+    this.setData({
+      showLoading: true
+    })
+    wx.showToast({
+      title: '加载中',
+      mask: true,
+      icon: 'loading'
+    })
   },
   back() {
     // wx.navigateTo({ url: '/pages/accountSetting/accountSetting', })
@@ -25,6 +35,7 @@ Page({
     })
   },
   submit(){
+    this.showLoading();
     wx.request({
       url: api+'api/feedback/add?token='+this.data.token,
       method:"POST",
@@ -42,6 +53,9 @@ Page({
             title: '感谢您的反馈',
             icon: 'success',
             duration: 2500,
+          })
+          this.setData({
+            showList: false
           })
           setTimeout(function(){
             wx.navigateBack({

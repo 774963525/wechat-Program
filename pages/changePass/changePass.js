@@ -4,7 +4,16 @@ var app = getApp();
 var api = app.globalData.api;
 Page({
   data: {
-    
+    showLoading: false
+  },
+  showLoading() {
+    this.setData({
+      showLoading: true
+    })
+    wx.showToast({
+      title: '加载中',
+      icon: 'loading'
+    })
   },
   back() {
     // wx.navigateTo({ url: '/pages/accountSetting/accountSetting', })
@@ -82,45 +91,52 @@ Page({
           // console.log(res);
         }
       })
-    }
-    wx.request({
-      url: api + 'api/user/password?token=' + this.data.token,
-      method: "POST",
-      data: {
-        password: this.data.oldPassword,
-        new_password: this.data.newPassword
       
-      },
-      header: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      success: (res) => {
-        console.log(res.data)
-        if (res.data.status) {
-          wx.showToast({
-            title: '修改成功',
-            icon: 'success',
-            duration: 2500,
-          })
-          setTimeout(function () {
-            wx.navigateBack({
-              delta: 1
-            })
-          }, 2500)
-        }else{
+    }else{
+      this.showLoading();
+      wx.request({
+        url: api + 'api/user/password?token=' + this.data.token,
+        method: "POST",
+        data: {
+          password: this.data.oldPassword,
+          new_password: this.data.newPassword
+
+        },
+        header: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        success: (res) => {
           console.log(res.data)
-          wx.showModal({
-            title: '错误',
-            content: '密码错误',
-            success(res) {
-              console.log(res);
-            }
+          if (res.data.status) {
+            wx.showToast({
+              title: '修改成功',
+              icon: 'success',
+              duration: 2500,
+            })
+            setTimeout(function () {
+              wx.navigateBack({
+                delta: 1
+              })
+            }, 2500)
+          } else {
+            console.log(res.data)
+            wx.showModal({
+              title: '错误',
+              content: '密码错误',
+              success(res) {
+                console.log(res);
+              }
+            })
+          }
+          this.setData({
+            showList: false
           })
+
+
         }
-
-
-      }
-    })
+      })
+    }
+    
   },
   onLoad() {
     // 获取token

@@ -1,0 +1,38 @@
+.pic{
+  display: flex;
+  justify-content: space-between;
+}
+.showPic{
+
+  /* border: 1px solid black; */
+  width: 50%;
+}
+.row{
+  /* width: 200px; */
+}
+image{
+  max-width:200px;
+  max-height:190px;
+  float: right;
+}
+.control{
+  display: flex;
+  justify-content: space-around;
+   /* border: 1px solid black; */
+   background: #ffffff;
+   height: 60px;
+   position: fixed;
+   width: 100%;
+   bottom: 0;
+}
+.row{
+  flex:0 0 45%;
+  border: 1px solid green;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+  margin-top:10px; 
+  font-size: 18px;
+  color: green;
+  border-radius: 5px;
+}

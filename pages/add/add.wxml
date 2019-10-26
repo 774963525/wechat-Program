@@ -67,6 +67,16 @@
               </view>
             </picker>
           </view>
+          <view class="cu-form-group margin-top">
+            <view class="title">账户选择</view>
+            <picker bindchange="PickerChange" value="{{index}}" range="{{picker}}" >
+			<view class="picker">
+				{{index?picker[index]:'请选择'}}
+			</view>
+		</picker>
+          </view>
+
+
           <view class="cu-form-group">
             <view class="title">交易对象</view>
             <input placeholder="请输入交易对象(可空)" bindinput="company_name"></input>

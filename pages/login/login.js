@@ -5,16 +5,24 @@ Page({
     phoneNumber:"",
     password:"",
   },
+  register() {
+    wx.navigateTo({ url: '/pages/register/register', })
+  },
   back() {
-    // wx.navigateTo({ url: '/pages/accountSetting/accountSetting', })
+    wx.navigateTo({ url: '/pages/index/index', })
 
     // 返回上一层
-    wx.navigateBack({
-      delta: 1
-    })
+    // wx.navigateBack({
+    //   delta: 1
+    // })
   },
   phoneNumber(e){
     this.data.phoneNumber = e.detail.value.trim();
+  },
+  fogetPass(){
+    wx.navigateTo({
+      url: "/pages/foget/foget",
+    })
   },
   password(e) {
 
@@ -68,14 +76,16 @@ Page({
         } else {
           wx.showModal({
             title: '错误',
-            content: '账号或密码错误,请重新尝试',
-            success(res) {
-              console.log(res);
-            }
+            content: res.data.data,
+            
+          })
+          this.setData({
+            password: ""
           })
           return
         }
       },
+     
     })
   }
 

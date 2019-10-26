@@ -1,37 +1,46 @@
-
 var app = getApp()
 var api = app.globalData.api;
 Page({
   data: {
     // 编辑呗点击后改为其他数字 金额和备注变为可写
-    change:0
+    change: 0,
+    showLoading: false
   },
   back() {
     // wx.navigateTo({ url: '/pages/accountSetting/accountSetting', })
-    
+
     // 返回上一层
     wx.navigateBack({
-      
-      url:"pages/index/index"
+
+      url: "pages/index/index"
+    })
+  },
+  showLoading() {
+    this.setData({
+      showLoading: true
+    })
+    wx.showToast({
+      title: '加载中',
+      icon: 'loading'
     })
   },
   // 显示大图
   ViewImage(e) {
     console.log(e.currentTarget.dataset.url)
     wx.previewImage({
-      
+
       urls: this.data.original,
       current: this.data.original[e.currentTarget.dataset.url]
-     
+
     });
   },
-  money(e){
-    
+  money(e) {
+
     this.setData({
       money: e.detail.value.trim()
     })
   },
-  mark(e){
+  mark(e) {
 
     console.log(e.detail.value.trim())
     this.setData({
@@ -39,36 +48,44 @@ Page({
     })
   },
   // 对象
-  company(e){
+  company(e) {
     console.log(e.detail.value.trim())
     this.setData({
       company: e.detail.value.trim()
     })
   },
   // 修改账户
-  edit(){
-    
+  edit() {
+
     this.setData({
-      change:1
+      change: 1
     })
+    wx.showToast({
+      title: '请修改',
+
+      duration: 2000,
+    })
+
     // console.log(this.data.change)
     this.onLoad();
-    
+
   },
   // 保存修改
-  save(){
+  save() {
 
     var id = this.data.id;
     // 如果是underfined要赋值
-    if (this.data.money == undefined ){
+    if (this.data.money == undefined) {
       this.setData({
-        money:this.data.total_money
+        money: this.data.total_money
       })
-    } if(this.data.mark == undefined){
+    }
+    if (this.data.mark == undefined) {
       this.setData({
         mark: this.data.remark
       })
-    } if(this.data.company == undefined){
+    }
+    if (this.data.company == undefined) {
       this.setData({
         company: this.data.company_name
       })
@@ -78,25 +95,32 @@ Page({
     console.log(this.data.money);
     // console.log(this.data.money)
     wx.request({
-      url: api+'api/record/update?id='+id+'&token='+this.data.token,
+      url: api + 'api/record/update?id=' + id + '&token=' + this.data.token,
       method: "POST",
       data: {
         total_money: Number(this.data.money),
-        company_name: ""+this.data.company,
-        remark: ""+this.data.mark
+        company_name: "" + this.data.company,
+        remark: "" + this.data.mark
       },
       header: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
-      success:(res)=>{
-        if(res.data.status){
+      success: (res) => {
+        if (res.data.status) {
           wx.showToast({
-            title: '成功',
+            title: '保存成功',
             icon: 'success',
             duration: 2000,
           })
-        }else{
-          console.log(res.data)
+        } else {
+          wx.showModal({
+            title: '错误',
+            content: res.data.data,
+            success(res) {
+              console.log(res);
+            }
+          })
+          return
         }
       }
 
@@ -106,27 +130,44 @@ Page({
     })
   },
   // 删除
-  delete(){
-
-    var id = this.data.id;
-    wx.request({
-      url: api +'api/record/delete?id='+id+'&token='+this.data.token,
-      success:(res)=>{
-        console.log(res.data)
-        if(res.data.status){
-          wx.showToast({
-            title: '成功',
-            icon: 'success',
-            duration: 2000,
+  delete() {
+    wx.showModal({
+      title: '删除',
+      content: '确定要删除吗？',
+      cancelText: '取消',
+      confirmText: '确定',
+      success: res => {
+        if (res.confirm) {
+          var id = this.data.id;
+          wx.request({
+            url: api + 'api/record/delete?id=' + id + '&token=' + this.data.token,
+            success: (res) => {
+              console.log(res.data)
+              if (res.data.status) {
+                wx.showToast({
+                  title: '成功',
+                  icon: 'success',
+                  duration: 2000,
+                })
+                this.back();
+              } else {
+                wx.showModal({
+                  title: '错误',
+                  content: res.data.data,
+                  success(res) {
+                    console.log(res);
+                  }
+                })
+                return
+              }
+            }
           })
-          this.back();
-        }else{
-          console.log(res.data);
         }
       }
     })
+
   },
-  onLoad(){
+  onLoad() {
 
     app.getToken((token) => {
       console.log(token);
@@ -135,6 +176,7 @@ Page({
       })
     })
     // 从缓存拿取数据
+    this.showLoading();
     wx.getStorage({
       key: 'singleDetail',
       success: (res) => {
@@ -156,10 +198,10 @@ Page({
         // console.log("8:   ")
         // console.log(res.data.items[0].images[0].original)
         var thumbnail = []
-        var original=[]
+        var original = []
         // 图片有几张
         var img_len = res.data.items[0].images.length
-        for(var i = 0;i<img_len;i++){
+        for (var i = 0; i < img_len; i++) {
           thumbnail.push(res.data.items[0].images[i].thumbnail)
           original.push(res.data.items[0].images[i].original)
         }
@@ -170,7 +212,7 @@ Page({
           // 交易对象
           company_name: res.data.company_name,
           // "办公费"
-          category_name:res.data.category_name,
+          category_name: res.data.category_name,
           // 用户 EE
           user_nickname: res.data.user_nickname,
           //收入/支出
@@ -180,15 +222,16 @@ Page({
           // 备注
           remark: res.data.remark,
           // 日期
-          date:res.data.date,
+          date: res.data.date,
           // 账本名
-          account_name : res.data.items[0].account_name,
+          account_name: res.data.items[0].account_name,
           // 图片 缩略图
           thumbnail: thumbnail,
           // 原图
           original: original,
+          showLoading: false
         })
-        console.log(this.data.thumbnail)
+        // console.log(this.data.thumbnail)
       },
     })
   }

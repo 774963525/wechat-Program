@@ -1,4 +1,4 @@
-<template name ="footer">
+
 <view class="footer">
   <view>
   <view class="cu-bar tabbar margin-bottom-xl bg-white">
@@ -10,7 +10,7 @@
       <view class="action text-gray" >
         <view class="cuIcon-rank"></view> 超表
       </view>
-      <navigator class="action text-gray add-action" url="{{'/pages/add/add'}}" open-type="redirect" hover-class="none">
+      <navigator class="action text-gray add-action" url="{{status?'/pages/add/add':'/pages/login/login'}}" open-type="redirect" hover-class="none">
         <button class="cu-btn cuIcon-add bg-green shadow"></button>
         记账
       </navigator>
@@ -30,4 +30,3 @@
     </view>
   </view>
 </view>
-</template>

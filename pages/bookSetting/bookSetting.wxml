@@ -4,14 +4,14 @@
     <view class="cuIcon-back">返回</view>
   </view>
   <view class='title_text'>
-    账本设置
+    账簿设置
   </view>
 </view>
 <view class="container" style="margin-top: 90px">
 
   <view class="text-grey" style="margin:0px 0px 0px 10px;padding-top:10px;">
     <icon class="cuIcon-titles text-green"></icon>
-    首页默认加载排序第一的账本明细
+    首页默认加载排序第一的账簿明细
   </view>
 
   <!-- 划框 -->
@@ -19,12 +19,12 @@
   <!-- <view  wx:for-index="index1" wx:for="{{num}}" wx:key>
   </view> -->
   <view class="cu-list menu-avatar" style="margin-top:40px;">
-    <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{accountListInfosList[0]}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd"  data-target="move-box-{{index}}">
+    <view class="cu-item {{modalName=='move-box-'+ index?'move-cur':''}}" wx:for="{{bookListInfosList[0]}}" wx:key bindtouchstart="ListTouchStart" bindtouchmove="ListTouchMove" bindtouchend="ListTouchEnd"  data-target="move-box-{{index}}">
 
       <view class="content" style=" margin-top: 3px;margin-left:-50px;" >
-     
-        <view class="text-grey" bindtap="accountDetail" data-id="{{accountListInfosList[0][index].id}}">
-          <icon class="cuIcon-profile" style="margin-top:-6px;width:30px;"></icon>{{accountListInfosList[0][index].name}}</view>
+        <!-- 点击查看详情 -->
+        <view class="text-grey" bindtap="bookDetail"  data-id="{{bookListInfosList[0][index].id}}">
+          <icon class="cuIcon-profile" style="margin-top:-6px;width:30px;"></icon>{{bookListInfosList[0][index].name}}</view>
 
         </view>
      
@@ -34,10 +34,13 @@
       </view>
       <view class="move">
         <view class="bg-grey">返回</view>
-        <view class="bg-red" bindtap="delAccount" data-id="{{accountListInfosList[0][index].id}}">删除</view>
+        <view class="bg-red" bindtap="delBook" data-id="{{bookListInfosList[0][index].id}}">删除</view>
       </view>
     </view>
   </view>
+ 
+
+
   <!-- 底部两框 -->
   <!-- <icon  class="cuIcon-back text-xs"></icon> -->
   <view class="two">
@@ -45,7 +48,7 @@
     <view class="row">
       
       <view class="row1 action text-gray" > <icon  class="cuIcon-edit"></icon> 保存排序</view>
-      <view class="row1 action text-green" bindtap="addAccount"> <icon  class="cuIcon-add" ></icon> 添加账本</view>
+      <view class="row1 action text-green" bindtap="addBook"> <icon  class="cuIcon-add" ></icon> 添加账簿</view>
     </view>
     
   </view>

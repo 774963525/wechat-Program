@@ -1,15 +1,16 @@
 
-var app = getApp(); 
+var app = getApp();
 
 // 得到api
 var api = app.globalData.api;
 
 Page({
-  data:{
-    accountList:[],
-    num:0,
-    idList:[],
-    token:"",
+  data: {
+    accountList: [],
+    num: 0,
+    idList: [],
+    token: "",
+    modalName:'',
     showLoading: false
   },
   showLoading() {
@@ -24,7 +25,7 @@ Page({
   },
   back() {
     // wx.navigateTo({ url: '/pages/index/index', })
-  
+
     // 返回上一层
     wx.navigateBack({
       delta: 1
@@ -56,20 +57,20 @@ Page({
       ListTouchDirection: null
     })
   },
-  // 获取账本列表
-  getAccountList() {
+  // 获取账簿列表
+  getBookList() {
     this.showLoading();
     wx.request({
-      url: api + 'api/account?token=' + this.data.token,
+      url: api + 'api/book?token=' + this.data.token,
       success: (res) => {
         console.log(res.data);
-        var accountListInfosList = []
+        var bookListInfosList = []
         if (res.data.status) {
-          accountListInfosList.push(res.data.data)
+          bookListInfosList.push(res.data.data)
           this.setData({
-            accountListInfosList: accountListInfosList
+            bookListInfosList: bookListInfosList
           })
-          console.log(this.data.accountListInfosList[0]);
+          // console.log(this.data.bookListInfosList);
         } else {
           console.log(res);
           return
@@ -81,63 +82,28 @@ Page({
       }
     })
   },
-  //查看账户详情
-  accountDetail(e){
-    // 需要获取账户id
+  // 查看book详情
+  bookDetail(e){
     // console.log(e.target.dataset.id);
     var id = e.target.dataset.id;
-
     wx.request({
-      url: api + 'api/account/detail?id=' + id +"&token="+this.data.token,
+      url: api + 'api/book/detail?token=' + this.data.token,
+      method:"POST",
+      data:{
+        book_id:id
+      },
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
       success: (res) => {
-
-        console.log(res.data);
         if (res.data.status) {
-          // 将数据存入缓存
-          var accountData = {
-            // 账户名
-            name: res.data.data.name,
-            // 账户创建时间
-            created_at: res.data.data.created_at,
-            // 初始值
-            initial_balance: res.data.data.initial_balance,
-            // 备注
-            remark: res.data.data.remark,
-            // 类别
-            type: res.data.data.type,
-            id:id,
-          }
-
-          wx.setStorageSync('setAccountData', accountData);
-          // 跳转详情页
-          wx.navigateTo({ url: "/pages/accountDetail/accountDetail", })
-        }
-      }
-
-    })
-
-  }, 
-
-  // 删除账户
-  delAccount(e){
-    // 需要获取账户id
-    console.log(e.target.dataset.id);
-    var id = e.target.dataset.id;
-    this.showLoading();
-    // 调方法
-    wx.request({
-      url: api + "api/account/delete?id=" + id + "&token=" + this.data.token,
-      success: (res) => {
-        console.log(res.data);
-        if(res.data.status==true){
-          wx.showToast({
-            title: '成功',
-            icon: 'success',
-            duration: 2000,
-          })
-          setTimeout(() => {
-            this.onLoad();
-          }, 1000)
+         this.setData({
+           bookDetail: res.data.data
+         })
+        //  缓存
+          wx.setStorageSync('bookSingle', this.data.bookDetail)
+          wx.navigateTo({ url: "/pages/setSingleBook/setSingleBook", })
+        //  console.log(this.data.bookDetail);
         } else {
           wx.showModal({
             title: '错误',
@@ -147,11 +113,70 @@ Page({
             }
           })
           return
-        } 
-        this.setData({
-          showList: false
-        })
+        }
+
+      }
+    })
+  },
+
+  // 删除账簿
+  delBook(e){
+    console.log(api)
+    console.log(this.data.token)
+    console.log(e.target.dataset.id);
+    var id = e.target.dataset.id;
+    // 调方法
+    wx.request({
+      url: api+'api/book/delete?token='+this.data.token,
+      method:"POST",
+      data:{
+        book_id:id
+      },
+      header: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      },
+      success:(res)=>{
+        if (res.data.status == true) {
+          wx.showToast({
+            title: '成功',
+            icon: 'success',
+            duration: 2000,
+          })
+          setTimeout(()=>{
+            this.onLoad();
+          },1000)
+        }else{
+          wx.showModal({
+            title: '错误',
+            content: res.data.data,
+            success(res) {
+              console.log(res);
+            }
+          })
+          return
+        }
         
+      }
+    })
+  },
+  // 删除账户
+  delAccount(e) {
+    // 需要获取账户id
+    console.log(e.target.dataset.id);
+    var id = e.target.dataset.id;
+    // 调方法
+    wx.request({
+      url: api + "api/account/delete?id=" + id + "&token=" + this.data.token,
+      success: (res) => {
+        console.log(res.data);
+        if (res.data.status == true) {
+          wx.showToast({
+            title: '成功',
+            icon: 'success',
+            duration: 2000,
+          })
+        }
+        this.onLoad();
         // let i = 0;
         // // 将名字和id存入
         // var arr = [];
@@ -160,53 +185,35 @@ Page({
         //   arr.push(content[i].name);
         //   arr_id.push(content[i].id);
 
-        }
-       
-      
+      }
+
+
     })
 
   },
-  // 跳转到新增账户
-  addAccount(){
-    
-    wx.navigateTo({ url: "/pages/addAccount/addAccount", })
+  // 跳转到新增账簿
+  addBook(){
+    wx.navigateTo({ url: "/pages/addBook/addBook", })
   },
-  // 获取账户信息
-  // showAllAccount() {
-
-
-    // 调用接口
-    // wx.request({
-    //   url: api + "api/account?token=" + this.data.token,
-    //   success: (res) => {
-       
-    //     console.log(res.data.data);
-    //     let accountList = res.data.data;   
-    //     this.setData({
-    //       accountList: accountList
-    //     })
-    //   }
-    // })
-  // },
   onShow: function () {
     this.onLoad();
-    
+
 
   },
-  onLoad(){
+  onLoad() {
     // 获取token
     app.getToken((token) => {
       console.log(token);
       this.setData({
         token: token,
       })
-    // this.getBookList();
-      this.getAccountList();
-    //  
+      this.getBookList();
+      //  this.showAllAccount();
+      //  
     })
-    
-   
+
+
   }
-  
- 
+
+
 })

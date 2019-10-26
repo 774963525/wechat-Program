@@ -17,6 +17,19 @@ Page({
     ],
     num: 0,
     num2: 0,
+    showLoading: false
+
+  },
+  showLoading() {
+    this.setData({
+      showLoading: true
+    })
+    wx.showToast({
+      title: '加载中',
+      mask: true,
+      icon: 'loading'
+      
+    })
   },
   back() {
     // wx.navigateTo({ url: '/pages/accountSetting/accountSetting', })
@@ -37,6 +50,7 @@ Page({
 
   },
   delete(e){
+    this.showLoading();
     // 获取到发送来的id
     // console.log(e.currentTarget.dataset.id);
     wx.request({
@@ -53,7 +67,7 @@ Page({
             this.onLoad()
           }, 1500)
         }
-        
+        showLoading: false
       }
     })
   },
@@ -133,6 +147,7 @@ Page({
   },
   // 获取收入或支出类别
   getBook(){
+    this.showLoading();
     console.log(this.data.TabCur)
     wx.request({
       url: api + 'api/category?token=' + this.data.token,
@@ -150,8 +165,11 @@ Page({
             categoryList: res.data.data
           })
         }
-        console.log(this.data.categoryList)
+        this.setData({
+          showList: false
+        })
       }
+      
     })
   },
   // 页面加载默认界面

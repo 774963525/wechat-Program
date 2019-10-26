@@ -1,9 +1,16 @@
-<view class='nav' style='height:90px'>
-  <!-- 返回图标 -->
-  <view class='title_icon' style="font-size: 13px;position: absolute;top: 52px;left: 20px;color: #fff;" bindtap="back">
-    <view class="cuIcon-back">返回</view>
-  </view>
-  <view class='title_text'>
-    账本设置
-  </view>
+
+<cu-custom is="colorui/components/cu-custom">
+#shadow-root
+<view class="cu-custom cu-custom"style="height:64px">
+<view class="cu-bar cu-bar fixed fixed bg-gradual-blue bg-gradual-blue" style="height:64px;padding-top:20px;">
+<view bindtap="BackPage" class="action action">
+<text class="cuIcon-back cuIcon-back">
+::before
+</text>
 </view>
+<view class="content content"style="top:20px"></view>
+</view>
+</view>
+<view>返回</view>
+<view>头像</view>
+</cu-custom>

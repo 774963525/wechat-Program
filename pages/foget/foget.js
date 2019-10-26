@@ -1,6 +1,4 @@
-var app = getApp();
-
-// 得到api
+const app = getApp();
 var api = app.globalData.api;
 Page({
   data: {
@@ -9,21 +7,10 @@ Page({
     key: "",
     url: "",
     mailCode: "",
-    username: "",
+
     password: "",
-    // 注册成功
     success: "0",
-    showLoading: false
-  },
-  showLoading() {
-    this.setData({
-      showLoading: true
-    })
-    wx.showToast({
-      title: '加载中',
-      mask: true,
-      icon: 'loading'
-    })
+    check: 0,
   },
   back() {
     // wx.navigateTo({ url: '/pages/user/user', })
@@ -53,7 +40,7 @@ Page({
   },
   // 获得图片验证码表单
   picCode(e) {
-    
+    // console.log(e.detail.value.trim());
     this.data.picCode = e.detail.value.trim();
   },
   // 发送手机短信验证码
@@ -75,16 +62,24 @@ Page({
         "Content-Type": "application/x-www-form-urlencoded"
       },
       // 13162793171
-      success: function (res) {
-        console.log(res.data);
+      success: (res) => {
+        
         if (res.data.status != false) {
-          wx.showToast({
-            title: '成功',
-            icon: 'success',
-            duration: 2000,
-          })
+          console.log(res.data);
         } else {
-          console.log(res.data.data);
+          wx.showModal({
+            title: '错误',
+            content: "请输入图片验证码",
+            success(res) {
+              console.log(res);
+            }
+          })
+          setTimeout(() => {
+            this.setData({
+              check: 1
+            })
+          }, 1000)
+
         }
 
       },
@@ -94,6 +89,7 @@ Page({
   mailCode(e) {
     this.data.mailCode = e.detail.value.trim();
   },
+
   // 密码
   password(e) {
 
@@ -101,34 +97,30 @@ Page({
   },
   // 提交表单
   submit() {
-    this.showLoading();
-    // console.log(this.data.password);
     wx.request({
-      url: api +'api/user/mobile?token='+this.data.token,
-      method:"POST",
+      url: api +"api/user/token/sms",
+      method: "POST",
       data: {
         mobile: this.data.phoneNumber,
         verify: this.data.mailCode,
         password: this.data.password
-        
       },
       header: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
       success: (res) => {
         console.log(res.data);
-        if(res.data.status==true){
+        if (res.data.status != false) {
           wx.showToast({
             title: '修改成功',
             icon: 'success',
-            duration: 2500,
+            duration: 2000,
           })
-          setTimeout(function(){
-            wx.navigateBack({
-              delta: 1
-            })
-          },2500)
-        }else{
+          setTimeout(() => {
+            this.back()
+            console.log(11111)
+          }, 1000)
+        } else {
           wx.showModal({
             title: '错误',
             content: res.data.data,
@@ -138,22 +130,14 @@ Page({
           })
           return
         }
-        this.setData({
-          showList:false
-        })
-      }
+      },
     })
-   
-  }, 
-  onLoad() {
-    // 获取token
-    app.getToken((token) => {
-      console.log(token);
-      this.setData({
-        token: token,
-      })
-    })
-   
-  }
-  
+  },
+ 
+
+
+
+
+
+
 })

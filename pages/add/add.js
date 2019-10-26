@@ -17,7 +17,7 @@ Page({
     tabId: [],
     num: 0,
     num2: 0,
-    
+    picker:[],
     date: '2018-12-25',
     //----------------------------------------
     total_money:0,
@@ -32,6 +32,7 @@ Page({
     modalName: '',
     // 文件key
     keyList:[],
+    showLoading: false
   },
   back() {
     // 返回失效?
@@ -42,6 +43,15 @@ Page({
     // wx.navigateBack({
     //   delta: 1
     // })
+  },
+  showLoading() {
+    this.setData({
+      showLoading: true
+    })
+    wx.showToast({
+      title: '加载中',
+      icon: 'loading'
+    })
   },
   // tab的不同 查不同的数据
   tabSelect(e) {
@@ -129,8 +139,40 @@ Page({
 
   },// 显示弹框
   showModal(e) {
+    // 查看可以选择的所有账户
+    this.showAllAccount();
     this.setData({
       modalName: e.currentTarget.dataset.target
+    })
+  },
+  // 获取账户信息
+  showAllAccount() {
+    // 调用接口
+    wx.request({
+      url: api + "api/account?token=" + this.data.token,
+      success: (res) => {
+
+        console.log(res.data.data);
+        let accountList = []
+        let accountNameList = [];
+        accountList.push(res.data.data);
+        console.log(accountList[0]) 
+        for (var i = 0; i < accountList[0].length;i++){
+          accountNameList.push(accountList[0][i].name)
+        }
+        console.log(accountNameList)
+        this.setData({
+          picker: accountNameList,
+          accountList:accountList[0]
+        })
+        // console.log(this.data.accountList)
+
+        // var num = this.data.accountList.length;
+        // this.setData({
+        //   num: num,
+        // })
+
+      }
     })
   },
   // 隐藏弹框
@@ -246,12 +288,13 @@ Page({
       return t;
     }
   },
-  // 时间选择
+  // 选择器选择
   PickerChange(e) {
     console.log(e);
     this.setData({
       index: e.detail.value
     })
+    // 获取账户选择的下标 index
   },
   // 时间变化
   DateChange(e) {
@@ -261,13 +304,14 @@ Page({
   },
   // 添加交易记录
   addRecord(){
+    this.showLoading();
     // 记账金额 total_money
     // console.log("记账金额"+this.data.total_money);
     // 实付 money
     // console.log("金额" + this.data.money);
     // 帐户id account_id 全局中
-    console.log("账户id")
-    console.log(wx.getStorageSync("accountId").id);
+    // console.log("账户id")
+    // console.log(this.data.accountList[this.data.index].id);
     // 类别id category_id
     // console.log("类别id")
     // console.log(this.data.tabId[[this.data.choose]]);
@@ -290,7 +334,7 @@ Page({
         // 实际
         money: this.data.money,
         // 账户id
-        account_id: wx.getStorageSync("accountId").id,
+        account_id: this.data.accountList[this.data.index].id,
         category_id: this.data.tabId[this.data.choose],
         date:this.data.date,
         company_name: this.data.company_name,
@@ -311,8 +355,10 @@ Page({
           this.hideModal();
         }else{
           console.log(res.data)
-
         }
+        this.setData({
+          showList: false
+        })
       }
     })
   },

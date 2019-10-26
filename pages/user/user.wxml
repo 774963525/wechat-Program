@@ -60,6 +60,13 @@
       </navigator>
     </view>
     <view class="cu-item arrow" wx:if="{{login}}">
+      <button class="cu-btn content" open-type="feedback" bindtap="accountSetting" >
+        <text class="cuIcon-writefill text-cyan"></text>
+        <text class="text-grey">账本设置</text>
+      </button>
+      
+    </view>
+    <view class="cu-item arrow" wx:if="{{login}}">
       <button class="cu-btn content" open-type="feedback" bindtap="suggestions" >
         <text class="cuIcon-writefill text-cyan"></text>
         <text class="text-grey">意见反馈</text>

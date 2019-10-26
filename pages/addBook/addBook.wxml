@@ -1,0 +1,26 @@
+<view class='nav' style='height:90px;'>
+  <!-- 返回图标 -->
+  <view class='title_icon' style="font-size: 15px;position: absolute;top: 52px;left: 20px;color: #fff;" bindtap="back">
+    <view class="cuIcon-back" style="margin-top:7px;">返回</view>
+  </view>
+  <view class='title_text'>
+    添加账簿
+  </view>
+</view>
+
+<view class="container" style="margin-top: 120px">
+<!-- 名称 -->
+  <view class="cu-form-group">
+		<view class="title">名称</view>
+		<input placeholder="填入账簿名" class="text-right" bindinput="name"></input>
+	</view>
+</view>
+<view class="padding flex flex-direction">
+  <button class="cu-btn bg-green lg" bindtap="addBook">提交</button>
+</view>
+<view  style="margin-top:30px;">
+  <text class="text-gray">提示：
+1.个人账本为私密类型账本，个人记账最佳选择，每人只能创建一个
+2.其他账本为多人类型账本，可选邀请好友加入共同记账，创建数量不限
+3.其中情侣账本、家庭账本具有社会属性，每个人每种只能创建或加入一个</text>
+</view>
