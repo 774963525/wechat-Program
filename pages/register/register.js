@@ -26,16 +26,28 @@ Page({
   },
   // 发送验证码
   sendPicCode() {
-    wx.request({
-      url: "http://jizhang-api-dev.it266.com/api/captcha",
-      success: (res) => {
-        console.log(res.data);
-        this.setData({
-          key: res.data.data.key,
-          url: res.data.data.url
-        });
-      }
-    })
+    if (this.data.phoneNumber==""){
+      wx.showModal({
+        title: '错误',
+        content: "手机号码不能为空",
+        success(res) {
+          console.log(res);
+        }
+      })
+      return
+    }else{
+      wx.request({
+        url: "http://jizhang-api-dev.it266.com/api/captcha",
+        success: (res) => {
+          console.log(res.data);
+          this.setData({
+            key: res.data.data.key,
+            url: res.data.data.url
+          });
+        }
+      })
+    }
+    
   },
   // 获得图片验证码表单
   picCode(e) {
@@ -69,7 +81,25 @@ Page({
             icon: 'success',
             duration: 2000,
           })
-        } else {
+        } else if(this.data.phoneNumber == "") {
+          wx.showModal({
+            title: '错误',
+            content: "手机号码不能为空",
+            success(res) {
+              console.log(res);
+            }
+          })
+          return 
+        } else if (res.data.data =="手机格式不正确"){
+          wx.showModal({
+            title: '错误',
+            content: "请输入格式正确的手机号",
+            success(res) {
+              console.log(res);
+            }
+          })
+          return 
+        }else {
           wx.showModal({
             title: '错误',
             content: res.data.data,
@@ -82,7 +112,7 @@ Page({
               check: 1
             })
           }, 1000)
-          
+          return 
         }
 
       },

@@ -34,7 +34,9 @@ Page({
       icon: 'loading'
     })
   },
-
+  goAdd() {
+    wx.navigateTo({ url: '/pages/add/add', })
+  },
   onLoad: function (options) {
     // 获取token
     app.getToken((token)=>{

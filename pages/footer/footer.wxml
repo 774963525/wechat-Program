@@ -10,10 +10,11 @@
       <view class="action text-gray" >
         <view class="cuIcon-rank"></view> 超表
       </view>
-      <navigator class="action text-gray add-action" url="{{'/pages/add/add'}}" open-type="redirect" hover-class="none">
+
+      <view class="action text-gray add-action" hover-class="none" bindtap="goAdd">
         <button class="cu-btn cuIcon-add bg-green shadow"></button>
         记账
-      </navigator>
+      </view>
       <view class="action text-gray">
         <view class="cuIcon-upstage">
           {{pageNum}}

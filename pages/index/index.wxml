@@ -121,15 +121,15 @@
     </view>
     <!-- <text>备注:{{showList[index].remark}}</text>  -->
   </view>
-  
+  <view style="height:100px;"></view>
 </view>
 
 
-
  <view style="position:absolute;bottom:0px;">
-  <template is="footer" > -->
+  <template is="footer" > 
      
    </template> 
-  <!-- <pageFoot></pageFoot> -->
+
+
   
 </view>

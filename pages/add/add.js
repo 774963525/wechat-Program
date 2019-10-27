@@ -2,6 +2,7 @@ var app = getApp();
 var api = app.globalData.api;
 // 图片key数组
 var keyList = [];
+
 Page({
   data: {
     // tab选择
@@ -36,13 +37,16 @@ Page({
   },
   back() {
     // 返回失效?
-    wx.navigateTo({ url: '/pages/index/index', })
+    // wx.navigateTo({ url: '/pages/index/index', })
 
     // // 返回上一层
     // console.log(1)
-    // wx.navigateBack({
-    //   delta: 1
-    // })
+    // console.log(getCurrentPages())
+
+
+    wx.navigateBack({
+      delta: 0
+    })
   },
   showLoading() {
     this.setData({

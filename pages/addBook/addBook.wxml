@@ -18,8 +18,8 @@
 <view class="padding flex flex-direction">
   <button class="cu-btn bg-green lg" bindtap="addBook">提交</button>
 </view>
-<view  style="margin-top:30px;">
-  <text class="text-gray">提示：
+<view  style="margin-top:30px;width:90%;margin:0 auto">
+  <text class="text-gray" >提示：
 1.个人账本为私密类型账本，个人记账最佳选择，每人只能创建一个
 2.其他账本为多人类型账本，可选邀请好友加入共同记账，创建数量不限
 3.其中情侣账本、家庭账本具有社会属性，每个人每种只能创建或加入一个</text>
