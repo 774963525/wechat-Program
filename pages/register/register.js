@@ -65,7 +65,7 @@ Page({
         console.log(res.data);
         if (res.data.status != false) {
           wx.showToast({
-            title: '成功',
+            title: '验证码已发送',
             icon: 'success',
             duration: 2000,
           })
@@ -132,14 +132,21 @@ Page({
 
           
         } else {
-          console.log(res.data.data);
+          wx.showModal({
+            title: '错误',
+            content: res.data.data,
+            success(res) {
+              console.log(res);
+            }
+          })
+          return
+
         }
       },
     })
   },
   goLogin(){
-    wx.navigateTo({
-      url: "/pages/login/login", })
+    this.back();
     
   }
 
