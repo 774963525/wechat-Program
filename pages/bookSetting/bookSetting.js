@@ -1,4 +1,3 @@
-
 var app = getApp();
 
 // 得到api
@@ -10,7 +9,7 @@ Page({
     num: 0,
     idList: [],
     token: "",
-    modalName:'',
+    modalName: '',
     showLoading: false
   },
   showLoading() {
@@ -83,27 +82,29 @@ Page({
     })
   },
   // 查看book详情
-  bookDetail(e){
+  bookDetail(e) {
     // console.log(e.target.dataset.id);
     var id = e.target.dataset.id;
     wx.request({
       url: api + 'api/book/detail?token=' + this.data.token,
-      method:"POST",
-      data:{
-        book_id:id
+      method: "POST",
+      data: {
+        book_id: id
       },
       header: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
       success: (res) => {
         if (res.data.status) {
-         this.setData({
-           bookDetail: res.data.data
-         })
-        //  缓存
+          this.setData({
+            bookDetail: res.data.data
+          })
+          //  缓存
           wx.setStorageSync('bookSingle', this.data.bookDetail)
-          wx.navigateTo({ url: "/pages/setSingleBook/setSingleBook", })
-        //  console.log(this.data.bookDetail);
+          wx.navigateTo({
+            url: "/pages/setSingleBook/setSingleBook",
+          })
+          //  console.log(this.data.bookDetail);
         } else {
           wx.showModal({
             title: '错误',
@@ -120,44 +121,54 @@ Page({
   },
 
   // 删除账簿
-  delBook(e){
+  delBook(e) {
     console.log(api)
     console.log(this.data.token)
     console.log(e.target.dataset.id);
     var id = e.target.dataset.id;
-    // 调方法
-    wx.request({
-      url: api+'api/book/delete?token='+this.data.token,
-      method:"POST",
-      data:{
-        book_id:id
-      },
-      header: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      success:(res)=>{
-        if (res.data.status == true) {
-          wx.showToast({
-            title: '成功',
-            icon: 'success',
-            duration: 2000,
-          })
-          setTimeout(()=>{
-            this.onLoad();
-          },1000)
-        }else{
-          wx.showModal({
-            title: '错误',
-            content: res.data.data,
-            success(res) {
-              console.log(res);
+    wx.showModal({
+      title: '删除',
+      content: '确定要删除吗？',
+      cancelText: '取消',
+      confirmText: '确定',
+      success: res => {
+        if (res.confirm) {
+          wx.request({
+            url: api + 'api/book/delete?token=' + this.data.token,
+            method: "POST",
+            data: {
+              book_id: id
+            },
+           header: {
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            success: (res) => {
+              if (res.data.status == true) {
+                wx.showToast({
+                  title: '成功',
+                  icon: 'success',
+                  duration: 2000,
+                  success:(res)=>{
+                    this.onLoad();
+                  }
+                })
+                
+              } else {
+                wx.showModal({
+                  title: '错误',
+                  content: res.data.data,
+                  showCancel:true
+                })
+                return
+              }
             }
           })
-          return
         }
-        
       }
     })
+
+
+
   },
   // 删除账户
   delAccount(e) {
@@ -192,10 +203,12 @@ Page({
 
   },
   // 跳转到新增账簿
-  addBook(){
-    wx.navigateTo({ url: "/pages/addBook/addBook", })
+  addBook() {
+    wx.navigateTo({
+      url: "/pages/addBook/addBook",
+    })
   },
-  onShow: function () {
+  onShow: function() {
     this.onLoad();
 
 

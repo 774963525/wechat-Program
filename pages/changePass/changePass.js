@@ -83,15 +83,23 @@ Page({
   },
   // 提交
   submit() {
+    console.log(this.data.newPassword)
+    console.log(this.data.newPassword2)
+    console.log(this.data.oldPassword)
     if (this.data.newPassword != this.data.newPassword2){
       wx.showModal({
         title: '错误',
         content: '两次密码错误,请重试',
-        success(res) {
-          // console.log(res);
-        }
+        showCancel:true
       })
-      
+      return
+    } else if (this.data.newPassword == undefined || this.data.newPassword2 == undefined || this.data.oldPassword == undefined){
+      wx.showModal({
+        title: '错误',
+        content: '密码不能为空',
+        showCancel:true
+      })
+      return
     }else{
       this.showLoading();
       wx.request({
@@ -122,7 +130,7 @@ Page({
             console.log(res.data)
             wx.showModal({
               title: '错误',
-              content: '密码错误',
+              content: res.data.data,
               success(res) {
                 console.log(res);
               }
@@ -131,6 +139,7 @@ Page({
           this.setData({
             showList: false
           })
+         
 
 
         }

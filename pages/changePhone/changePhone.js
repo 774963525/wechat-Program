@@ -1,6 +1,4 @@
 var app = getApp();
-
-// 得到api
 var api = app.globalData.api;
 Page({
   data: {
@@ -11,26 +9,26 @@ Page({
     mailCode: "",
     username: "",
     password: "",
-    // 注册成功
-    success: "0",
-    showLoading: false
+   
+    check: 0,
   },
-  showLoading() {
-    this.setData({
-      showLoading: true
-    })
-    wx.showToast({
-      title: '加载中',
-      mask: true,
-      icon: 'loading'
+  onLoad() {
+    // 获取token
+    app.getToken((token) => {
+      console.log(token);
+      this.setData({
+        token: token,
+      })
+     
     })
   },
   back() {
     // wx.navigateTo({ url: '/pages/user/user', })
-
+    console.log(1111)
     // // 返回上一层
     wx.navigateBack({
       delta: 1
+
     })
   },
   // 获得手机号码
@@ -41,7 +39,7 @@ Page({
   // 发送验证码
   sendPicCode() {
     wx.request({
-      url: api+"api/captcha",
+      url: api + "api/captcha",
       success: (res) => {
         console.log(res.data);
         this.setData({
@@ -53,13 +51,26 @@ Page({
   },
   // 获得图片验证码表单
   picCode(e) {
-    
+    // console.log(e.detail.value.trim());
     this.data.picCode = e.detail.value.trim();
   },
   // 发送手机短信验证码
   sendMailCode() {
+    if (this.data.phoneNumber == "") {
+      wx.showModal({
+        content: "手机号码不能为空",
+        showCancel: false,
+      })
+      return
+    } else if (this.data.phoneNumber.length != 11) {
+      wx.showModal({
+        content: "请输入正确的格式",
+        showCancel: false,
+      })
+      return
+    }
     wx.request({
-      url: api+"api/sms/verify",
+      url: api + "api/sms/verify",
       method: "POST",
       data: {
         //         mobile 手机号码
@@ -75,16 +86,19 @@ Page({
         "Content-Type": "application/x-www-form-urlencoded"
       },
       // 13162793171
-      success: function (res) {
+      success: (res) => {
         console.log(res.data);
-        if (res.data.status != false) {
+        if (res.data.status) {
           wx.showToast({
-            title: '成功',
+            title: '验证码已发送',
             icon: 'success',
             duration: 2000,
           })
-        } else {
-          console.log(res.data.data);
+        } else if (res.data.data == "INVALID_CAPTCHA") {
+          this.setData({
+            check: 1
+          })
+          this.sendPicCode();
         }
 
       },
@@ -94,6 +108,11 @@ Page({
   mailCode(e) {
     this.data.mailCode = e.detail.value.trim();
   },
+  // 用户名
+  username(e) {
+
+    this.data.username = e.detail.value.trim();
+  },
   // 密码
   password(e) {
 
@@ -101,59 +120,74 @@ Page({
   },
   // 提交表单
   submit() {
-    this.showLoading();
-    // console.log(this.data.password);
+
+    if (this.data.phoneNumber == "") {
+      wx.showModal({
+        content: "手机号码不能为空",
+        showCancel: false,
+      })
+      return
+    } else if (this.data.phoneNumber.length != 11) {
+      wx.showModal({
+        content: "请输入正确的格式",
+        showCancel: false,
+      })
+      return
+    } else if (this.data.password == "") {
+      wx.showModal({
+        content: "密码不能为空",
+        showCancel: false,
+      })
+      return
+    }else if (this.data.picCode == "") {
+      wx.showModal({
+        content: "请输入图片验证码",
+        showCancel: false,
+      })
+      return
+    } else if (this.data.mailCode == "") {
+      wx.showModal({
+        content: "请输入手机短信验证码",
+        showCancel: false,
+      })
+      return
+    } 
     wx.request({
-      url: api +'api/user/mobile?token='+this.data.token,
-      method:"POST",
+      url: api + "api/user/mobile?token="+this.data.token,
+      method: "POST",
       data: {
         mobile: this.data.phoneNumber,
         verify: this.data.mailCode,
-        password: this.data.password
-        
+        password: this.data.password,
       },
       header: {
         "Content-Type": "application/x-www-form-urlencoded"
       },
       success: (res) => {
         console.log(res.data);
-        if(res.data.status==true){
+        if (res.data.status) {
           wx.showToast({
-            title: '修改成功',
+            title: '成功',
             icon: 'success',
-            duration: 2500,
-          })
-          setTimeout(function(){
-            wx.navigateBack({
-              delta: 1
-            })
-          },2500)
-        }else{
-          wx.showModal({
-            title: '错误',
-            content: res.data.data,
-            success(res) {
-              console.log(res);
+            duration: 2000,
+            success: (res) => {
+              this.back();
             }
           })
+        } else {
+          wx.showModal({
+            content: res.data.data,
+            showCancel: false,
+          })
           return
+
         }
-        this.setData({
-          showList:false
-        })
-      }
+      },
     })
-   
-  }, 
-  onLoad() {
-    // 获取token
-    app.getToken((token) => {
-      console.log(token);
-      this.setData({
-        token: token,
-      })
-    })
-   
-  }
-  
+  },
+
+
+
+
+
 })

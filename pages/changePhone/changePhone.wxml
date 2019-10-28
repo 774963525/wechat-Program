@@ -10,31 +10,28 @@
 <!-- 输入手机号 -->
 <view class="container" style="margin-top:200px;">
   <form>
-  <view class="cu-form-group">
+    <view class="cu-form-group">
+      <view class="title">手机号码</view>
+      <input placeholder="请输入您希望修改的手机号码" bindinput="phoneNumber"></input>
+    </view>
+    <view class="cu-form-group">
       <view class="title">密码</view>
       <input placeholder="密码" password="true" bindinput="password"></input>
     </view>
-    <view class="cu-form-group">
-      <view class="title">手机号码</view>
-      <input placeholder="请输入手机号码" bindinput="phoneNumber"></input>
-    </view>
     <!-- 图片验证码 -->
-    <view class="cu-form-group">
-      <view class="title">图片验证码</view>
+    <view class="cu-form-group" wx:if="{{check==1}}">
+      <view class="title">图片验证</view>
       
       <input placeholder="请输入验证码" bindinput="picCode"></input>
-      <image class="widget_arrow2" src="{{url}}" style="width:70px;height:30px;" ></image>
-      <button class="cu-btn bg-green shadow" bindtap="sendPicCode">验证码</button>
+      <image class="widget_arrow2" src="{{url}}" bindtap = "sendPicCode" style="width:70px;height:30px;" ></image>
     </view>
     <!-- 验证码 -->
     <view class="cu-form-group">
-      <view class="title">手机验证码</view>
+      <view class="title">短信验证</view>
       <input placeholder="请输入验证码" bindinput="mailCode"></input>
       <button class="cu-btn bg-green shadow" bindtap="sendMailCode">发送验证码</button>
     </view>
     <text>\n</text>
-    
-    
     <text>\n</text>
   </form>
   <text>\n</text>

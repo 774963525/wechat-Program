@@ -123,47 +123,56 @@ Page({
     // 需要获取账户id
     console.log(e.target.dataset.id);
     var id = e.target.dataset.id;
-    this.showLoading();
+    
     // 调方法
-    wx.request({
-      url: api + "api/account/delete?id=" + id + "&token=" + this.data.token,
-      success: (res) => {
-        console.log(res.data);
-        if(res.data.status==true){
-          wx.showToast({
-            title: '成功',
-            icon: 'success',
-            duration: 2000,
-          })
-          setTimeout(() => {
-            this.onLoad();
-          }, 1000)
-        } else {
-          wx.showModal({
-            title: '错误',
-            content: res.data.data,
-            success(res) {
-              console.log(res);
-            }
-          })
-          return
-        } 
-        this.setData({
-          showList: false
-        })
-        
-        // let i = 0;
-        // // 将名字和id存入
-        // var arr = [];
-        // var arr_id = [];
-        // for (i = 0; i < content.length; i++) {
-        //   arr.push(content[i].name);
-        //   arr_id.push(content[i].id);
+    wx.showModal({
+      title: '删除',
+      content: '确定要删除吗？',
+      cancelText: '取消',
+      confirmText: '确定',
+      success: res => {
+        if (res.confirm) {
+          wx.request({
+            url: api + "api/account/delete?id=" + id + "&token=" + this.data.token,
+            success: (res) => {
+              console.log(res.data);
+              if (res.data.status == true) {
+                wx.showToast({
+                  title: '成功',
+                  icon: 'success',
+                  duration: 2000,
+                })
+                setTimeout(() => {
+                  this.onLoad();
+                }, 1000)
+              } else {
+                wx.showModal({
+                  title: '错误',
+                  content: res.data.data,
+                  success(res) {
+                    console.log(res);
+                  }
+                })
+                return
+              }
 
+
+              // let i = 0;
+              // // 将名字和id存入
+              // var arr = [];
+              // var arr_id = [];
+              // for (i = 0; i < content.length; i++) {
+              //   arr.push(content[i].name);
+              //   arr_id.push(content[i].id);
+
+            }
+
+
+          })
         }
-       
-      
+      }
     })
+   
 
   },
   // 跳转到新增账户
