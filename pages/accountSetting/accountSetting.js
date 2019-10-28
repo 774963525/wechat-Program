@@ -168,7 +168,7 @@ Page({
   },
   // 跳转到新增账户
   addAccount(){
-    
+    // console.log(1)
     wx.navigateTo({ url: "/pages/addAccount/addAccount", })
   },
   // 获取账户信息

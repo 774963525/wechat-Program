@@ -68,12 +68,26 @@ Page({
     }) 
    
   },
-  addBook(){
 
-  },
   // 新增账户 
   addAccount(){ 
-    // console.log(api)
+
+    if (this.data.name==''){
+      wx.showModal({
+        content: "账本名不能为空",
+        showCancel: false,
+      })
+      return
+
+    } else if (this.data.index == 0) {
+      wx.showModal({
+        content: "请账本选择类型",
+        showCancel: false,
+      })
+      return
+
+    }
+
     this.showLoading();
     wx.request({
       url: api+"api/account/create?token="+this.data.token,

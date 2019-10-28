@@ -35,32 +35,36 @@ Page({
     })
   },
   goAdd() {
-    wx.navigateTo({ url: '/pages/add/add', })
+    console.log(this.data.token)
+    if (this.data.token != null && this.data.token != '') {
+      wx.navigateTo({ url: '/pages/add/add', })
+    
+      return
+    }else{
+      wx.navigateTo({ url: '/pages/goLogin/goLogin', })
+    }
+    
   },
   onLoad: function (options) {
+    // 获取时间
+    this.getDate();
     // 获取token
     app.getToken((token)=>{
       this.setData({
         token :token,
       })
-      if(this.data.token==null){
-         wx.navigateTo({ url: '/pages/goLogin/goLogin', })
-         return 
+      if(token ==null){
+        return 
       }
-      // 调方法 获取账户
-      // this.getAccountList();
       // 调方法 获取账簿列表(两个)
       this.getBookList();
       // 显示账簿总金额
       this.getIndexData();
-      // 获取时间
-      this.getDate();
+
     // 显示账单记录
       this.showTransactionRecord();
-     
-      
-
-    }) 
+    })
+    console.log(this.data.token)
     // swiper设置高度
     var that = this;
     that.setData({
@@ -140,8 +144,10 @@ Page({
     // this.getAccountList();
     this.getBookList();
     this.setData({
-      modalName: e.currentTarget.dataset.target
+
+      modalName: "DrawerModalL"
     })
+
   },
   // 获取账簿列表
   getBookList(){
@@ -155,15 +161,12 @@ Page({
           this.setData({
             bookListInfosList: bookListInfosList
           })
-          console.log(this.data.bookListInfosList);
-        }else{
-          wx.showModal({
-            title: '错误',
-            content: res.data.data,
-            success(res) {
-              console.log(res);
-            }
-          })
+          // 调到接口 没问题后才弹框
+          
+          return 
+          
+        } else if (res.data.data == "INVALID_TOKEN") { } {
+          wx.navigateTo({ url: '/pages/goLogin/goLogin', })
           return
         }
         // console.log(this.data.bookListInfo)

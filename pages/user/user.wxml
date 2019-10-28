@@ -28,7 +28,7 @@
   <view class="cu-list menu card-menu margin-top-xl margin-bottom-xl shadow-lg radius">
     <view class="cu-item arrow" wx:if="{{!login}}">
     <!-- 点击注册 -->
-      <navigator class="content"  url="/pages/register/register" open-type="redirect" hover-class="none" bindtap="register" >
+      <navigator class="content"  url="/pages/register/register"  hover-class="none" bindtap="register" >
         <text class="cuIcon-github text-grey"></text>
         <text class="text-grey">注册</text>
       </navigator>
@@ -74,10 +74,10 @@
       
     </view>
     <view class="cu-item arrow"  wx:if="{{login}}">
-      <navigator class="content" url="/pages/about/test/list" hover-class="none" bindtap="exitLogin">
+      <view class="content" hover-class="none" bindtap="exitLogin">
         <text class="cuIcon-creativefill text-orange"></text>
         <text class="text-grey">退出登录</text>
-      </navigator>
+      </view>
     </view>
   </view>
   <view class="cu-tabbar-height"></view>

@@ -165,6 +165,7 @@ Page({
             categoryList: res.data.data
           })
         }
+        
         this.setData({
           showList: false
         })
@@ -192,6 +193,7 @@ Page({
       })
       this.getBook();
     })
+    
 
 
 

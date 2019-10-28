@@ -36,9 +36,9 @@ Component({
         }, 20)
       } else {
         that.setData({
-          starCount: that.coutNum(3000),
-          forksCount: that.coutNum(484),
-          visitTotal: that.coutNum(24000)
+          starCount: that.coutNum(0),
+          forksCount: that.coutNum(0),
+          visitTotal: that.coutNum(0)
         })
       }
     }
@@ -68,6 +68,17 @@ Component({
     },
     // 用户信息修改
     changeUserMessage(){
+
+    },
+    goAdd() {
+      console.log(this.data.token)
+      if (this.data.token != null && this.data.token != '') {
+        wx.navigateTo({ url: '/pages/add/add', })
+
+        return
+      } else {
+        wx.navigateTo({ url: '/pages/goLogin/goLogin', })
+      }
 
     },
     showModal(e) {
@@ -115,12 +126,19 @@ Component({
               title: '退出成功',
               icon:'success',
               duration:2000,
+              success:function(){
+                wx.setStorageSync("token", null)
+                wx.setStorageSync("logged", false)
+                wx.setStorageSync("userMessage", null)
+                wx.navigateTo({
+                  url: "/pages/index/index",
+                })
+               
+              }
+              
             })
-            setTimeout(()=>{
-              wx.setStorageSync("token", null)
-              wx.setStorageSync("logged", false)
-              wx.navigateTo({ url: '/pages/index/index', })
-            })
+   
+            
           }
           
         }

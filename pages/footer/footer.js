@@ -15,9 +15,7 @@ Component({
   detached: function () { },
 
   methods: {
-    goAdd(){
-      wx.navigateTo({ url: '/pages/add/add', })
-    }
+
   }
 
 })

@@ -28,7 +28,7 @@ Page({
   // 发送验证码
   sendPicCode() {
     wx.request({
-      url: "http://jizhang-api-dev.it266.com/api/captcha",
+      url: api+"api/captcha",
       success: (res) => {
         console.log(res.data);
         this.setData({
@@ -46,7 +46,7 @@ Page({
   // 发送手机短信验证码
   sendMailCode() {
     wx.request({
-      url: "http://jizhang-api-dev.it266.com/api/sms/verify",
+      url: api+"api/sms/verify",
       method: "POST",
       data: {
         //         mobile 手机号码

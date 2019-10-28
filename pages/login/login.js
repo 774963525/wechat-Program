@@ -1,4 +1,5 @@
- const app = getApp();
+var app = getApp();
+var api = app.globalData.api;
  Page({
    data: {
      phoneNumber: "",
@@ -10,14 +11,14 @@
      })
    },
    back() {
-     wx.navigateTo({
-       url: '/pages/index/index',
-     })
+    //  wx.navigateTo({
+    //    url: '/pages/index/index',
+    //  })
 
      // 返回上一层
-     // wx.navigateBack({
-     //   delta: 1
-     // })
+     wx.navigateBack({
+       delta: 1
+     })
    },
    phoneNumber(e) {
      this.data.phoneNumber = e.detail.value.trim();
@@ -32,10 +33,25 @@
      this.data.password = e.detail.value.trim();
    },
    login() {
+     if (this.data.phoneNumber == "") {
+       wx.showModal({
+         title: '错误',
+         content: "账号不能为空",
+       })
+       return
+
+     } else if (this.data.password == "") {
+       wx.showModal({
+         title: '错误',
+         content: "请输入密码",
+       })
+       return
+
+     }
      // console.log(this.data.phoneNumber);
      // console.log(this.data.password);
      wx.request({
-       url: "http://jizhang-api-dev.it266.com/api/user/token/mobile",
+       url: api+"api/user/token/mobile",
        method: "POST",
        data: {
          mobile: this.data.phoneNumber,
@@ -68,20 +84,6 @@
                url: "/pages/index/index",
              })
            }, 2000)
-         } else if (this.data.phoneNumber == "") {
-           wx.showModal({
-             title: '错误',
-             content: "账号不能为空",
-           })
-           return
-
-         } else if (this.data.password == "") {
-           wx.showModal({
-             title: '错误',
-             content: "密码不能为空",
-           })
-           return
-
          } else {
            wx.showModal({
              title: '错误',

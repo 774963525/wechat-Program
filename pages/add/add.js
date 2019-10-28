@@ -308,17 +308,17 @@ Page({
   },
   // 添加交易记录
   addRecord(){
-    this.showLoading();
+    
     // 记账金额 total_money
-    // console.log("记账金额"+this.data.total_money);
+    console.log("记账金额"+this.data.total_money);
     // 实付 money
-    // console.log("金额" + this.data.money);
+    console.log("金额" + this.data.money);
     // 帐户id account_id 全局中
     // console.log("账户id")
     // console.log(this.data.accountList[this.data.index].id);
     // 类别id category_id
-    // console.log("类别id")
-    // console.log(this.data.tabId[[this.data.choose]]);
+    console.log("类别id")
+    console.log(this.data.tabId[[this.data.choose]]);
     // 日期 date
     // console.log(this.data.date);
     // 交易对象 company_name
@@ -329,42 +329,72 @@ Page({
     // console.log("key列表值为")
     // console.log(this.data.keyList)  
 
+    if (this.data.index == undefined){
+      wx.showModal({
+        title: '错误',
+        content: "请选择账户",
+      })
+      return
+    } else if (this.data.total_money==0){
+      wx.showModal({
+        title: '错误',
+        content: "记账金额不能为空",
+      })
+      return
+    } else if (this.data.money==0){
+      wx.showModal({
+        title: '错误',
+        content: "实付金额不能为空",
+      })
+      return
+    }
+    else{
     // 记账
-    wx.request({
-      url: api + 'api/record/create?token=' + this.data.token,
-      method: "POST",
-      data: {
-        total_money: this.data.total_money,
-        // 实际
-        money: this.data.money,
-        // 账户id
-        account_id: this.data.accountList[this.data.index].id,
-        category_id: this.data.tabId[this.data.choose],
-        date:this.data.date,
-        company_name: this.data.company_name,
-        remark: this.data.remark,
-        image_keys: this.data.keyList
-      },
-      header: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      success: (res) => {
-        // console.log(res.data);
-        if(res.data.status==true){
-          wx.showToast({
-            title: '成功',
-            icon: 'success',
-            duration: 2000,
+      this.showLoading();
+      wx.request({
+        url: api + 'api/record/create?token=' + this.data.token,
+        method: "POST",
+        data: {
+          total_money: this.data.total_money,
+          // 实际
+          money: this.data.money,
+          // 账户id
+          account_id: this.data.accountList[this.data.index].id,
+          category_id: this.data.tabId[this.data.choose],
+          date:this.data.date,
+          company_name: this.data.company_name,
+          remark: this.data.remark,
+          image_keys: this.data.keyList
+        },
+        header: {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        success: (res) => {
+          // console.log(res.data);
+          if(res.data.status==true){
+            wx.showToast({
+              title: '成功',
+              icon: 'success',
+              duration: 2000,
+            })
+            this.hideModal();
+          }else{
+            wx.showModal({
+              title: '错误',
+              content: res.data.data,
+              success(res) {
+                console.log(res);
+              }
+            })
+            return
+
+          }
+          this.setData({
+            showList: false
           })
-          this.hideModal();
-        }else{
-          console.log(res.data)
         }
-        this.setData({
-          showList: false
-        })
-      }
-    })
+      })
+    }
   },
 
 
@@ -377,7 +407,13 @@ Page({
       this.setData({
         token: token,
       })
-      this.showSelectTab();
+      if(token == null||token ==''){
+        wx.navigateTo({ url: '/pages/goLogin/goLogin', })
+        return 
+      }
+      this.showSelectTab()  
+      
+      
     })
     // 创建日期 例如 "2016-10-13" date 
     var d = new Date();
@@ -392,7 +428,7 @@ Page({
     })
    
     // 获取
-    // console.log(this.data.tabName);
+   
 
     
   }

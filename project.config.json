@@ -48,7 +48,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 27,
+			"current": 28,
 			"list": [
 				{
 					"id": 2,
@@ -243,6 +243,13 @@
 					"id": -1,
 					"name": "pages/foget/foget",
 					"pathName": "pages/foget/foget",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/addBook/addBook",
+					"pathName": "pages/addBook/addBook",
 					"scene": null
 				}
 			]

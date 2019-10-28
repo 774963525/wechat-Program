@@ -17,7 +17,7 @@
       </view>
       <view class="action text-gray">
         <view class="cuIcon-upstage">
-          {{pageNum}}
+
         </view>
         榜单
       </view>

@@ -59,20 +59,20 @@
   <!-- 导航 -->
   <view class="nav-1">
     <view class="nav-row" >
-      <view class="nav-choose" bindtap="{{token==null?'goLogin':'goPrivateAccount'}}">
+      <view class="nav-choose" bindtap="{{token== ''||token==null?'goLogin':'goPrivateAccount'}}">
         <text class="iconfont icon-leibieguanli"></text>
       </view>
       <!-- goTable1 -->
-      <view class="nav-choose" bindtap="{{token==null?'goLogin':'goCalendar'}}">
+      <view class="nav-choose" bindtap="{{token==''||token==null?'goLogin':'goCalendar'}}">
         <text class="iconfont icon-rili"></text>
       </view>
-      <view class="nav-choose" bindtap="{{token==null?'goLogin':'goTable1'}}">
+      <view class="nav-choose" bindtap="{{token==''||token==null?'goLogin':'goTable1'}}">
         <text class="iconfont icon-tubiao"></text>
       </view>
-      <view class="nav-choose" bindtap="{{token==null?'goLogin':'goTable2'}}">
+      <view class="nav-choose" bindtap="{{token==''||token==null?'goLogin':'goTable2'}}">
         <text class="iconfont icon-tubiaozhongxin"></text>
       </view>
-      <view class="nav-choose" bindtap="{{token==null?'goLogin':'goTable3'}}">
+      <view class="nav-choose" bindtap="{{token==''||token==null?'goLogin':'goTable3'}}">
         <text class="iconfont icon-tubiao1"></text>
       </view>
     </view>

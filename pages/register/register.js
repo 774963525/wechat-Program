@@ -1,3 +1,5 @@
+var app = getApp();
+var api = app.globalData.api;
 Page({
   data: {
     phoneNumber: "",
@@ -13,11 +15,12 @@ Page({
   },
   back() {
     // wx.navigateTo({ url: '/pages/user/user', })
-    
+    console.log(1111)
     // // 返回上一层
-    wx.navigateBack({
-      delta: 1
-    })
+     wx.navigateBack({
+       delta: 1
+     
+     })
   },
   // 获得手机号码
   phoneNumber(e) {
@@ -26,18 +29,8 @@ Page({
   },
   // 发送验证码
   sendPicCode() {
-    if (this.data.phoneNumber==""){
-      wx.showModal({
-        title: '错误',
-        content: "手机号码不能为空",
-        success(res) {
-          console.log(res);
-        }
-      })
-      return
-    }else{
       wx.request({
-        url: "http://jizhang-api-dev.it266.com/api/captcha",
+        url: api+"api/captcha",
         success: (res) => {
           console.log(res.data);
           this.setData({
@@ -45,9 +38,7 @@ Page({
             url: res.data.data.url
           });
         }
-      })
-    }
-    
+      })  
   },
   // 获得图片验证码表单
   picCode(e) {
@@ -56,8 +47,21 @@ Page({
   },
   // 发送手机短信验证码
   sendMailCode() {
+    if (this.data.phoneNumber == "") {
+      wx.showModal({
+        content: "手机号码不能为空",
+        showCancel: false,
+      })
+      return
+    } else if (this.data.phoneNumber.length!=11){
+      wx.showModal({
+        content: "请输入正确的格式",
+        showCancel: false,
+      })
+      return
+    }
     wx.request({
-      url: "http://jizhang-api-dev.it266.com/api/sms/verify",
+      url: api+"api/sms/verify",
       method: "POST",
       data: {
         //         mobile 手机号码
@@ -75,46 +79,19 @@ Page({
       // 13162793171
       success: (res) => {
         console.log(res.data);
-        if (res.data.status != false) {
+        if (res.data.status) {
           wx.showToast({
             title: '验证码已发送',
             icon: 'success',
             duration: 2000,
           })
-        } else if(this.data.phoneNumber == "") {
-          wx.showModal({
-            title: '错误',
-            content: "手机号码不能为空",
-            success(res) {
-              console.log(res);
-            }
-          })
-          return 
-        } else if (res.data.data =="手机格式不正确"){
-          wx.showModal({
-            title: '错误',
-            content: "请输入格式正确的手机号",
-            success(res) {
-              console.log(res);
-            }
-          })
-          return 
-        }else {
-          wx.showModal({
-            title: '错误',
-            content: res.data.data,
-            success(res) {
-              console.log(res);
-            }
-          })
-          setTimeout(() => {
+        } else if (res.data.data =="INVALID_CAPTCHA"){
             this.setData({
               check: 1
             })
-          }, 1000)
-          return 
-        }
-
+            this.sendPicCode();
+          }
+          
       },
     })
   },
@@ -134,8 +111,40 @@ Page({
   },
   // 提交表单
   submit(){
+
+    if(this.data.phoneNumber == "") {
+      wx.showModal({
+        content: "手机号码不能为空",
+        showCancel: false,
+      })
+      return
+    } else if (this.data.phoneNumber.length!=11){
+      wx.showModal({
+        content: "请输入正确的格式",
+        showCancel: false,
+      })
+      return
+    } else if (this.data.picCode == "") {
+      wx.showModal({
+        content: "请输入图片验证码",
+        showCancel: false,
+      })
+      return
+    } else if (this.data.mailCode == "") {
+      wx.showModal({
+        content: "请输入手机短信验证码",
+        showCancel: false,
+      })
+      return
+    } else if (this.data.password == "") {
+      wx.showModal({
+        content: "密码不能为空",
+        showCancel: false,
+      })
+      return
+    } 
     wx.request({
-                    url:"http://jizhang-api-dev.it266.com/api/user/register",
+      url:api+"api/user/register",
       method: "POST",
       data: {
         mobile:this.data.phoneNumber,
@@ -149,25 +158,18 @@ Page({
       success: (res) => {
         console.log(res.data);
         if (res.data.status != false) {
-          wx.showToast({
-            title: '成功',
-            icon: 'success',
-            duration: 2000,
-          })
           // 存放token
           // app.globalData.token = res.data.data.token;
-          this.setData({
-            success:"1"
-          })
-
+          wx.setStorageSync("logged", true)
+          wx.setStorageSync("token", res.data.data.token)
+          wx.navigateTo({ url: '/pages/index/index', })
           
+
         } else {
           wx.showModal({
-            title: '错误',
+           
             content: res.data.data,
-            success(res) {
-              console.log(res);
-            }
+            showCancel:false,
           })
           return
 
