@@ -144,8 +144,7 @@ Page({
     // this.getAccountList();
     this.getBookList();
     this.setData({
-
-      modalName: "DrawerModalL"
+      tan:1
     })
 
   },
@@ -162,7 +161,12 @@ Page({
             bookListInfosList: bookListInfosList
           })
           // 调到接口 没问题后才弹框
-          
+         if(this.data.tan ==1){
+           this.setData({
+
+             modalName: "DrawerModalL"
+           })
+         }
           return 
           
         } else if (res.data.data == "INVALID_TOKEN") { } {
